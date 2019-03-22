@@ -3,7 +3,7 @@ data "aws_route53_zone" "default" {
 }
 
 resource "aws_acm_certificate" "default" {
-  domain_name = "${var.name}.${data.aws_route53_zone.name}"
+  domain_name = "${var.name}.${data.aws_route53_zone.default.name}"
 
   validation_method = "DNS"
 
