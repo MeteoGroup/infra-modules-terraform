@@ -84,7 +84,7 @@ resource "aws_iam_policy" "infra_nonprod" {
   policy = "${data.aws_iam_policy_document.infra_nonprod.json}"
 }
 
-resource "aws_iam_policy" "default_cache_bucket" {
+resource "aws_iam_policy" "permissions_cache_bucket" {
   count  = "${var.cache_enabled == "true" ? 1 : 0}"
   name   = "${var.name_prefix}-cache-bucket"
   path   = "/service-role/"
@@ -368,7 +368,7 @@ data "aws_iam_policy_document" "permissions_cache_bucket" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "default" {
+resource "aws_iam_role_policy_attachment" "permissions" {
   policy_arn = "${aws_iam_policy.permissions.arn}"
   role       = "${aws_iam_role.assume_codebuild.id}"
 }

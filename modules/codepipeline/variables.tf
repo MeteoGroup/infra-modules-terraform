@@ -48,21 +48,6 @@ variable "branch" {
   description = "Branch of the GitHub repository, _e.g._ ``master``"
 }
 
-variable "build_image" {
-  default     = "aws/codebuild/docker:1.12.1"
-  description = "Docker image for build environment, _e.g._ `aws/codebuild/docker:1.12.1` or `aws/codebuild/eb-nodejs-6.10.0-amazonlinux-64:4.0.0`"
-}
-
-variable "build_compute_type" {
-  default     = "BUILD_GENERAL1_SMALL"
-  description = "`CodeBuild` instance size.  Possible values are: ```BUILD_GENERAL1_SMALL``` ```BUILD_GENERAL1_MEDIUM``` ```BUILD_GENERAL1_LARGE```"
-}
-
-variable "buildspec" {
-  default     = ""
-  description = " Declaration to use for building the project. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html)"
-}
-
 # https://www.terraform.io/docs/configuration/variables.html
 # It is recommended you avoid using boolean values and use explicit strings
 variable "poll_source_changes" {
