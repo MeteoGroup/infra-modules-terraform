@@ -1,5 +1,5 @@
 output "host" {
-  value       = "${module.tld.hostname}"
+  value       = "${aws_route53_record.default.hostname}"
   description = "DNS hostname"
 }
 

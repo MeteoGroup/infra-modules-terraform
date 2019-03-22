@@ -685,7 +685,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "BASE_HOST"
-    value     = "${var.name}"
+    value     = "${var.name_prefix}"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
