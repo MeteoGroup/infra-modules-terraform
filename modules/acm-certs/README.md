@@ -6,23 +6,24 @@ It's Open Source and licensed under the [APACHE2](LICENSE).
 
 ## Usage
 
-### Simple Example
+### Example
 
 ```hcl
 module "lb_certificate" {
   source          = "git::https://github.com/MeteoGroup/acm-certs.git//modules/acm-certs?ref=master"
   name            = "alb"
-  hosted_zone_id         = "${aws_route53_zone.public.id}"
+  hosted_zone_id         = "${aws_route53_zone.main.id}"
 }
 ```
 
-```
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
 | name | Host name that will be added to the DNS zone to form FQDN, e.g. 'alb' or 'www' | string | `` | yes |
 | hosted_zone_id | DNS zone ID where record will be created and certificate validated | string | `` | yes |
+| tags | Additional tags (e.g. `map('Project','ABC')` | map | `<map>` | no |
+
 
 ## Outputs
 
