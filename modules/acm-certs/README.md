@@ -10,7 +10,7 @@ It's Open Source and licensed under the [APACHE2](LICENSE).
 
 ```hcl
 module "lb_certificate" {
-  source          = "git::https://github.com/MeteoGroup/acm-certs.git//modules/acm-certs?ref=master"
+  source          = "git::https://github.com/MeteoGroup/infra-modules-terraform.git//modules/acm-certs?ref=master"
   name            = "alb"
   hosted_zone_id         = "${aws_route53_zone.main.id}"
 }
