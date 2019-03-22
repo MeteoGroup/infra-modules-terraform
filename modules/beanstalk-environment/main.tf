@@ -1,14 +1,3 @@
-# Define composite variables for resources
-module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.6"
-  namespace  = "${var.namespace}"
-  name       = "${var.name}"
-  stage      = "${var.stage}"
-  delimiter  = "${var.delimiter}"
-  attributes = "${var.attributes}"
-  tags       = "${var.tags}"
-}
-
 data "aws_region" "default" {}
 
 #
@@ -32,7 +21,7 @@ data "aws_iam_policy_document" "service" {
 }
 
 resource "aws_iam_role" "service" {
-  name               = "${module.label.id}-service"
+  name               = "${var.name_prefix}-service"
   assume_role_policy = "${data.aws_iam_policy_document.service.json}"
 }
 
@@ -83,12 +72,12 @@ data "aws_iam_policy_document" "ec2" {
 }
 
 resource "aws_iam_role" "ec2" {
-  name               = "${module.label.id}-ec2"
+  name               = "${var.name_prefix}-ec2"
   assume_role_policy = "${data.aws_iam_policy_document.ec2.json}"
 }
 
 resource "aws_iam_role_policy" "default" {
-  name   = "${module.label.id}-default"
+  name   = "${var.name_prefix}-default"
   role   = "${aws_iam_role.ec2.id}"
   policy = "${data.aws_iam_policy_document.default.json}"
 }
@@ -129,7 +118,7 @@ resource "aws_iam_role_policy_attachment" "ecr-readonly" {
 }
 
 resource "aws_ssm_activation" "ec2" {
-  name               = "${module.label.id}"
+  name               = "${var.name_prefix}"
   iam_role           = "${aws_iam_role.ec2.id}"
   registration_limit = "${var.autoscale_max}"
 }
@@ -296,12 +285,12 @@ data "aws_iam_policy_document" "default" {
 }
 
 resource "aws_iam_instance_profile" "ec2" {
-  name = "${module.label.id}-ec2"
+  name = "${var.name_prefix}-ec2"
   role = "${aws_iam_role.ec2.name}"
 }
 
 resource "aws_security_group" "default" {
-  name        = "${module.label.id}"
+  name        = "${var.name_prefix}"
   description = "Allow inbound traffic from provided Security Groups"
 
   vpc_id = "${var.vpc_id}"
@@ -320,7 +309,7 @@ resource "aws_security_group" "default" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = "${module.label.tags}"
+  tags = "${var.tags}"
 }
 
 #
@@ -328,7 +317,7 @@ resource "aws_security_group" "default" {
 # http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-elasticbeanstalkmanagedactionsplatformupdate
 #
 resource "aws_elastic_beanstalk_environment" "default" {
-  name        = "${module.label.id}"
+  name        = "${var.name_prefix}"
   application = "${var.app}"
   description = "${var.description}"
 
@@ -339,7 +328,7 @@ resource "aws_elastic_beanstalk_environment" "default" {
 
   version_label = "${var.version_label}"
 
-  tags = "${module.label.tags}"
+  tags = "${var.tags}"
 
   # because of https://github.com/terraform-providers/terraform-provider-aws/issues/3963
   lifecycle {
@@ -1035,7 +1024,7 @@ data "aws_iam_policy_document" "elb_logs" {
     ]
 
     resources = [
-      "arn:aws:s3:::${module.label.id}-logs/*",
+      "arn:aws:s3:::${var.name_prefix}-logs/*",
     ]
 
     principals {
@@ -1048,18 +1037,17 @@ data "aws_iam_policy_document" "elb_logs" {
 }
 
 resource "aws_s3_bucket" "elb_logs" {
-  bucket        = "${module.label.id}-logs"
+  bucket        = "${var.name_prefix}-logs"
   acl           = "private"
   force_destroy = "${var.force_destroy}"
   policy        = "${data.aws_iam_policy_document.elb_logs.json}"
 }
 
-module "tld" {
-  source    = "git::https://github.com/cloudposse/terraform-aws-route53-cluster-hostname.git?ref=tags/0.2.5"
-  namespace = "${var.namespace}"
-  name      = "${var.name}"
-  stage     = "${var.stage}"
-  zone_id   = "${var.zone_id}"
-  records   = ["${aws_elastic_beanstalk_environment.default.cname}"]
-  enabled   = "${length(var.zone_id) > 0 ? "true" : "false"}"
+resource "aws_route53_record" "default" {
+  count   = "${length(var.zone_id) > 0 ? "true" : "false"}"
+  zone_id = "${var.zone_id}"
+  name    = "${var.name_prefix}"
+  type    = "CNAME"
+  ttl     = "300"
+  records = ["${aws_elastic_beanstalk_environment.default.cname}"]
 }
