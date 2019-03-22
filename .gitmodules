@@ -4,3 +4,6 @@
 [submodule "modules/security-group"]
 	path = modules/security-group
 	url = git://github.com/terraform-aws-modules/terraform-aws-security-group.git
+[submodule "modules/alb"]
+	path = modules/alb
+	url = git://github.com/terraform-aws-modules/terraform-aws-alb.git
