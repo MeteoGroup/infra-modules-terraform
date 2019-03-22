@@ -1,4 +1,4 @@
-# acm-certs [![Latest Release](https://img.shields.io/github/release/MeteoGroup/acm-certs.svg)](https://github.com/MeteoGroup/acm-certs/releases/latest) 
+# acm-certs [![Latest Release](https://img.shields.io/github/release/MeteoGroup/acm-certs.svg)](https://github.com/MeteoGroup/infra-modules-terraform/releases/latest)
 
 Terraform module designed to generate ACM certificates with DNS validation. Use `acm-certs` to create a certificate with unattended validation via DNS Route53 AWS service.
 
