@@ -1044,7 +1044,6 @@ resource "aws_s3_bucket" "elb_logs" {
 }
 
 resource "aws_route53_record" "default" {
-  count   = "${length(var.zone_id) > 0 ? "true" : "false"}"
   zone_id = "${var.zone_id}"
   name    = "${var.name_prefix}"
   type    = "CNAME"
