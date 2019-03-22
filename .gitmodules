@@ -10,3 +10,9 @@
 [submodule "modules/ec2-instance"]
 	path = modules/ec2-instance
 	url = git://github.com/terraform-aws-modules/terraform-aws-ec2-instance.git
+[submodule "modules/cicd"]
+	path = modules/cicd
+	url = git://github.com/cloudposse/terraform-aws-cicd.git
+[submodule "modules/codebuild"]
+	path = modules/codebuild
+	url = git://github.com/cloudposse/terraform-aws-codebuild.git
