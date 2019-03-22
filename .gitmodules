@@ -16,3 +16,9 @@
 [submodule "modules/codebuild"]
 	path = modules/codebuild
 	url = git://github.com/cloudposse/terraform-aws-codebuild.git
+[submodule "modules/beanstalk-environment"]
+	path = modules/beanstalk-environment
+	url = git://github.com/cloudposse/terraform-aws-elastic-beanstalk-environment.git
+[submodule "modules/beanstalk-application"]
+	path = modules/beanstalk-application
+	url = git://github.com/cloudposse/terraform-aws-elastic-beanstalk-application.git
