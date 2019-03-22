@@ -1,5 +1,5 @@
 output "host" {
-  value       = "${aws_route53_record.default.hostname}"
+  value       = "${aws_route53_record.default.name}"
   description = "DNS hostname"
 }
 
