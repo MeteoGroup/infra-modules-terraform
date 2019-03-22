@@ -49,12 +49,12 @@ locals {
   cache = "${local.cache_def[var.cache_enabled]}"
 }
 
-resource "aws_iam_role" "default" {
+resource "aws_iam_role" "assume_codebuild" {
   name               = "${var.name_prefix}-code"
-  assume_role_policy = "${data.aws_iam_policy_document.role.json}"
+  assume_role_policy = "${data.aws_iam_policy_document.service_codebuild.json}"
 }
 
-data "aws_iam_policy_document" "role" {
+data "aws_iam_policy_document" "service_codebuild" {
   statement {
     sid = ""
 
@@ -71,7 +71,7 @@ data "aws_iam_policy_document" "role" {
   }
 }
 
-resource "aws_iam_policy" "default" {
+resource "aws_iam_policy" "permissions" {
   name   = "${var.name_prefix}-code"
   path   = "/service-role/"
   policy = "${data.aws_iam_policy_document.permissions.json}"
@@ -369,25 +369,25 @@ data "aws_iam_policy_document" "permissions_cache_bucket" {
 }
 
 resource "aws_iam_role_policy_attachment" "default" {
-  policy_arn = "${aws_iam_policy.default.arn}"
-  role       = "${aws_iam_role.default.id}"
+  policy_arn = "${aws_iam_policy.permissions.arn}"
+  role       = "${aws_iam_role.assume_codebuild.id}"
 }
 
 resource "aws_iam_role_policy_attachment" "infra_nonprod" {
   count      = "${var.infra_build == "true" ? 1 : 0}"
   policy_arn = "${aws_iam_policy.infra_nonprod.arn}"
-  role       = "${aws_iam_role.default.id}"
+  role       = "${aws_iam_role.assume_codebuild.id}"
 }
 
 resource "aws_iam_role_policy_attachment" "default_cache_bucket" {
   count      = "${var.cache_enabled == "true" ? 1 : 0}"
-  policy_arn = "${element(aws_iam_policy.default_cache_bucket.*.arn, count.index)}"
-  role       = "${aws_iam_role.default.id}"
+  policy_arn = "${element(aws_iam_policy.permissions_cache_bucket.*.arn, count.index)}"
+  role       = "${aws_iam_role.assume_codebuild.id}"
 }
 
 resource "aws_codebuild_project" "default" {
   name          = "${var.name_prefix}"
-  service_role  = "${aws_iam_role.default.arn}"
+  service_role  = "${aws_iam_role.assume_codebuild.arn}"
   badge_enabled = "${var.badge_enabled}"
   build_timeout = "${var.build_timeout}"
 

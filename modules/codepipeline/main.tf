@@ -130,13 +130,13 @@ data "aws_iam_policy_document" "codebuild" {
       "codebuild:*",
     ]
 
-    resources = ["${module.default.project_id}"]
+    resources = ["${aws_codebuild_project.default.id}"]
     effect    = "Allow"
   }
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild_s3" {
-  role       = "${module.default.role_arn}"
+  role       = "${aws_codebuild_project.default.role_arn}"
   policy_arn = "${aws_iam_policy.s3.arn}"
 }
 
@@ -202,7 +202,7 @@ resource "aws_codepipeline" "source_build_deploy" {
       output_artifacts = ["package"]
 
       configuration {
-        ProjectName = "${module.default.project_name}"
+        ProjectName = "${aws_codebuild_project.default.name}"
       }
     }
   }
@@ -272,7 +272,7 @@ resource "aws_codepipeline" "source_build" {
       output_artifacts = ["package"]
 
       configuration {
-        ProjectName = "${module.default.project_name}"
+        ProjectName = "${aws_codebuild_project.default.name}"
       }
     }
   }
