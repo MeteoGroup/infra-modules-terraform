@@ -5,7 +5,7 @@ output "role_arn" {
 
 output "cache_bucket_name" {
   description = "Cache S3 bucket name"
-  value       = "${var.enabled == "true" && var.cache_enabled == "true" ? join("", aws_s3_bucket.cache_bucket.*.bucket) : "UNSET" }"
+  value       = "${var.cache_enabled == "true" ? join("", aws_s3_bucket.cache_bucket.*.bucket) : "UNSET" }"
 }
 
 output "badge_url" {
