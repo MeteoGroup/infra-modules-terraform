@@ -2,30 +2,19 @@ data "aws_caller_identity" "default" {}
 
 data "aws_region" "default" {}
 
-# Define composite variables for resources
-module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.0"
-  namespace  = "${var.namespace}"
-  name       = "${var.name}"
-  stage      = "${var.stage}"
-  delimiter  = "${var.delimiter}"
-  attributes = "${var.attributes}"
-  tags       = "${var.tags}"
-}
-
 resource "aws_s3_bucket" "cache_bucket" {
   count         = "${var.enabled == "true" && var.cache_enabled == "true" ? 1 : 0}"
   bucket        = "${local.cache_bucket_name_normalised}"
   acl           = "private"
   force_destroy = true
-  tags          = "${module.label.tags}"
+  tags          = "${var.tags}"
 
   lifecycle_rule {
     id      = "codebuildcache"
     enabled = true
 
     prefix = "/"
-    tags   = "${module.label.tags}"
+    tags   = "${var.tags}"
 
     expiration {
       days = "${var.cache_expiration_days}"
@@ -42,7 +31,7 @@ resource "random_string" "bucket_prefix" {
 }
 
 locals {
-  cache_bucket_name = "${module.label.id}${var.cache_bucket_suffix_enabled == "true" ? "-${random_string.bucket_prefix.result}" : "" }"
+  cache_bucket_name = "${var.name_prefix}${var.cache_bucket_suffix_enabled == "true" ? "-${random_string.bucket_prefix.result}" : "" }"
 
   ## Clean up the bucket name to use only hyphens, and trim its length to 63 characters.
   ## As per https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html
@@ -66,7 +55,7 @@ locals {
 
 resource "aws_iam_role" "default" {
   count              = "${var.enabled == "true" ? 1 : 0}"
-  name               = "${module.label.id}"
+  name               = "${var.name_prefix}"
   assume_role_policy = "${data.aws_iam_policy_document.role.json}"
 }
 
@@ -89,14 +78,14 @@ data "aws_iam_policy_document" "role" {
 
 resource "aws_iam_policy" "default" {
   count  = "${var.enabled == "true" ? 1 : 0}"
-  name   = "${module.label.id}"
+  name   = "${var.name_prefix}"
   path   = "/service-role/"
   policy = "${data.aws_iam_policy_document.permissions.json}"
 }
 
 resource "aws_iam_policy" "default_cache_bucket" {
   count  = "${var.enabled == "true" && var.cache_enabled == "true" ? 1 : 0}"
-  name   = "${module.label.id}-cache-bucket"
+  name   = "${var.name_prefix}-cache-bucket"
   path   = "/service-role/"
   policy = "${data.aws_iam_policy_document.permissions_cache_bucket.json}"
 }
@@ -161,7 +150,7 @@ resource "aws_iam_role_policy_attachment" "default_cache_bucket" {
 
 resource "aws_codebuild_project" "default" {
   count         = "${var.enabled == "true" ? 1 : 0}"
-  name          = "${module.label.id}"
+  name          = "${var.name_prefix}"
   service_role  = "${aws_iam_role.default.arn}"
   badge_enabled = "${var.badge_enabled}"
   build_timeout = "${var.build_timeout}"
@@ -214,5 +203,5 @@ resource "aws_codebuild_project" "default" {
     report_build_status = "${var.report_build_status}"
   }
 
-  tags = "${module.label.tags}"
+  tags = "${var.tags}"
 }

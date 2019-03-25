@@ -16,6 +16,10 @@ variable "job_policy_document" {}
 
 variable "repository_url" {}
 
+variable "priviledged" {
+  default = false
+}
+
 variable "command_array" {
   type = "list"
 }

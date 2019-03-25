@@ -1,14 +1,9 @@
-variable "namespace" {
-  default     = "global"
-  description = "Namespace, which could be your organization name, e.g. 'cp' or 'cloudposse'"
-}
-
 variable "stage" {
   default     = "default"
   description = "Stage, e.g. 'prod', 'staging', 'dev', or 'test'"
 }
 
-variable "name" {
+variable "name_prefix" {
   default     = "app"
   description = "Solution name, e.g. 'app' or 'jenkins'"
 }
@@ -67,18 +62,6 @@ variable "poll_source_changes" {
   type        = "string"
   default     = "true"
   description = "Periodically check the location of your source content and run the pipeline if changes are detected"
-}
-
-variable "delimiter" {
-  type        = "string"
-  default     = "-"
-  description = "Delimiter to be used between `name`, `namespace`, `stage`, etc."
-}
-
-variable "attributes" {
-  type        = "list"
-  default     = []
-  description = "Additional attributes (e.g. `policy` or `role`)"
 }
 
 variable "tags" {

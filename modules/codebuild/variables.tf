@@ -1,16 +1,10 @@
-variable "namespace" {
-  type        = "string"
-  default     = "global"
-  description = "Namespace, which could be your organization name, e.g. 'cp' or 'cloudposse'"
-}
-
 variable "stage" {
   type        = "string"
   default     = "default"
   description = "Stage, e.g. 'prod', 'staging', 'dev', or 'test'"
 }
 
-variable "name" {
+variable "name_prefix" {
   type        = "string"
   default     = "codebuild"
   description = "Solution name, e.g. 'app' or 'jenkins'"
@@ -79,18 +73,6 @@ variable "buildspec" {
   type        = "string"
   default     = ""
   description = "Optional buildspec declaration to use for building the project"
-}
-
-variable "delimiter" {
-  type        = "string"
-  default     = "-"
-  description = "Delimiter to be used between `name`, `namespace`, `stage`, etc."
-}
-
-variable "attributes" {
-  type        = "list"
-  default     = []
-  description = "Additional attributes (e.g. `policy` or `role`)"
 }
 
 variable "tags" {

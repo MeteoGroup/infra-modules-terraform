@@ -4,25 +4,14 @@ data "aws_region" "default" {
   current = true
 }
 
-# Define composite variables for resources
-module "label" {
-  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.3.1"
-  namespace  = "${var.namespace}"
-  name       = "${var.name}"
-  stage      = "${var.stage}"
-  delimiter  = "${var.delimiter}"
-  attributes = "${var.attributes}"
-  tags       = "${var.tags}"
-}
-
 resource "aws_s3_bucket" "default" {
-  bucket = "${module.label.id}"
+  bucket = "${var.name_prefix}"
   acl    = "private"
-  tags   = "${module.label.tags}"
+  tags   = "${var.tags}"
 }
 
 resource "aws_iam_role" "default" {
-  name               = "${module.label.id}"
+  name               = "${var.name_prefix}"
   assume_role_policy = "${data.aws_iam_policy_document.assume.json}"
 }
 
@@ -49,7 +38,7 @@ resource "aws_iam_role_policy_attachment" "default" {
 }
 
 resource "aws_iam_policy" "default" {
-  name   = "${module.label.id}"
+  name   = "${var.name_prefix}"
   policy = "${data.aws_iam_policy_document.default.json}"
 }
 
@@ -84,7 +73,7 @@ resource "aws_iam_role_policy_attachment" "s3" {
 }
 
 resource "aws_iam_policy" "s3" {
-  name   = "${module.label.id}-s3"
+  name   = "${var.name_prefix}-s3"
   policy = "${data.aws_iam_policy_document.s3.json}"
 }
 
@@ -115,7 +104,7 @@ resource "aws_iam_role_policy_attachment" "codebuild" {
 }
 
 resource "aws_iam_policy" "codebuild" {
-  name   = "${module.label.id}-codebuild"
+  name   = "${var.name_prefix}-codebuild"
   policy = "${data.aws_iam_policy_document.codebuild.json}"
 }
 
@@ -134,14 +123,11 @@ data "aws_iam_policy_document" "codebuild" {
 
 module "build" {
   source                = "git::https://github.com/cloudposse/terraform-aws-codebuild.git?ref=tags/0.9.0"
-  namespace             = "${var.namespace}"
-  name                  = "${var.name}"
+  name_prefix           = "${var.name_prefix}"
   stage                 = "${var.stage}"
   build_image           = "${var.build_image}"
   build_compute_type    = "${var.build_compute_type}"
   buildspec             = "${var.buildspec}"
-  delimiter             = "${var.delimiter}"
-  attributes            = "${concat(var.attributes, list("build"))}"
   tags                  = "${var.tags}"
   privileged_mode       = "${var.privileged_mode}"
   aws_region            = "${signum(length(var.aws_region)) == 1 ? var.aws_region : data.aws_region.default.name}"
@@ -176,7 +162,7 @@ resource "aws_iam_role_policy_attachment" "codebuild_s3" {
 resource "aws_codepipeline" "source_build_deploy" {
   # Elastic Beanstalk application name and environment name are specified
   count    = "${var.enabled && signum(length(var.app)) == 1 && signum(length(var.env)) == 1 ? 1 : 0}"
-  name     = "${module.label.id}"
+  name     = "${var.name_prefix}"
   role_arn = "${aws_iam_role.default.arn}"
 
   artifact_store {
@@ -246,7 +232,7 @@ resource "aws_codepipeline" "source_build_deploy" {
 resource "aws_codepipeline" "source_build" {
   # Elastic Beanstalk application name or environment name are not specified
   count    = "${var.enabled && (signum(length(var.app)) == 0 || signum(length(var.env)) == 0) ? 1 : 0}"
-  name     = "${module.label.id}"
+  name     = "${var.name_prefix}"
   role_arn = "${aws_iam_role.default.arn}"
 
   artifact_store {
