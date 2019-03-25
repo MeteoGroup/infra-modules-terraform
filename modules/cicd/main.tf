@@ -122,7 +122,7 @@ data "aws_iam_policy_document" "codebuild" {
 }
 
 module "build" {
-  source                = "../codebuild"
+  source                = "git::https://github.com/MeteoGroup/infra-modules-terraform.git//modules/codebuild?ref=master"
   name_prefix           = "${var.name_prefix}"
   stage                 = "${var.stage}"
   build_image           = "${var.build_image}"
