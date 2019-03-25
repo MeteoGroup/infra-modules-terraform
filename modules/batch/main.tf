@@ -197,7 +197,7 @@ locals {
     jobRoleArn  = "${aws_iam_role.job.arn}"
     vcpus       = "${var.job_vcpus}"
     memory      = "${var.job_memory}"
-    priviledged = "${var.priviledged}"
+    privileged  = "${var.privileged}"
     environment = "${var.environment_variables}"
 
     volumes = [

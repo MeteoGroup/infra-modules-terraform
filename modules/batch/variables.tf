@@ -16,7 +16,7 @@ variable "job_policy_document" {}
 
 variable "repository_url" {}
 
-variable "priviledged" {
+variable "privileged" {
   default = false
 }
 
