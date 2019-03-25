@@ -17,7 +17,7 @@ variable "job_policy_document" {}
 variable "repository_url" {}
 
 variable "privileged" {
-  default = "true"
+  default = "false"
 }
 
 variable "command_array" {
