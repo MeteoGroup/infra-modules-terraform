@@ -118,7 +118,9 @@ resource "aws_batch_compute_environment" "this" {
       "${var.security_group}",
     ]
 
-    subnets = "${var.subnets}"
+    subnets = [
+      "${var.subnets}",
+    ]
 
     type = "EC2"
   }
