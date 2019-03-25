@@ -99,7 +99,6 @@ resource "aws_iam_role_policy" "ecs_policy" {
 }
 
 resource "aws_batch_compute_environment" "this" {
-  depends_on               = ["resource.aws_batch_job_definition.this"]
   compute_environment_name = "${var.name_prefix}"
 
   service_role = "${aws_iam_role.batch_service.arn}"
@@ -108,6 +107,7 @@ resource "aws_batch_compute_environment" "this" {
   depends_on = [
     "aws_iam_role_policy_attachment.batch_service",
     "aws_iam_role_policy_attachment.ecs_instance_role",
+    "aws_batch_job_definition.this",
   ]
 
   lifecycle {
@@ -133,7 +133,7 @@ SCRIPT
 }
 
 resource "aws_launch_template" "this" {
-  depends_on = ["resource.aws_batch_job_definition.this"]
+  depends_on = ["aws_batch_job_definition.this"]
   name       = "${var.name_prefix}"
 
   iam_instance_profile {
@@ -244,7 +244,7 @@ resource "aws_batch_job_definition" "this" {
 }
 
 resource "aws_batch_job_queue" "main_queue" {
-  depends_on = ["resource.aws_batch_job_definition.this"]
+  depends_on = ["aws_batch_job_definition.this"]
   name       = "${var.name_prefix}"
   state      = "ENABLED"
   priority   = 1
