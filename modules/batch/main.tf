@@ -192,57 +192,8 @@ resource "aws_iam_role_policy" "job_main" {
   role   = "${aws_iam_role.job.id}"
 }
 
-#locals {
-#  container_properties = {
-#    command     = "${var.command_array}"
-#    image       = "${var.repository_url}:latest"
-#    jobRoleArn  = "${aws_iam_role.job.arn}"
-#    vcpus       = "${var.job_vcpus}"
-#    memory      = "${var.job_memory}"
-#    privileged  = "${var.privileged}"
-#    environment = "${var.environment_variables}"
-#
-#    volumes = [
-#      {
-#        host = {
-#          sourcePath = "/tmp"
-#        }
-#
-#        name = "tmp"
-#      },
-#    ]
-#
-#    mountPoints = [
-#      {
-#        sourceVolume  = "tmp"
-#        containerPath = "/tmp"
-#      },
-#    ]
-#  }
-#}
-
-resource "aws_batch_job_definition" "this" {
-  name = "${var.name_prefix}"
-  type = "container"
-
-  retry_strategy = {
-    attempts = 2
-  }
-
-  timeout = {
-    # 55min - so jobs are usually killed before next issue starts
-    attempt_duration_seconds = 3300
-  }
-
-  # replace(replace(...)) as workaround for terraform bug,
-  # as per https://github.com/hashicorp/terraform/issues/17033#issuecomment-399908596
-  #  container_properties = "${replace(replace(jsonencode(local.container_properties),
-  #                                            "/\"([0-9]+\\.?[0-9]*)\"/",
-  #                                            "$1"),
-  #                                    "string:",
-  #                                    "")}"
-  container_properties = <<CONTAINER
-  {
+locals {
+  container_properties = {
     command     = "${var.command_array}"
     image       = "${var.repository_url}:latest"
     jobRoleArn  = "${aws_iam_role.job.arn}"
@@ -268,7 +219,27 @@ resource "aws_batch_job_definition" "this" {
       },
     ]
   }
-  CONTAINER
+}
+
+resource "aws_batch_job_definition" "this" {
+  name = "${var.name_prefix}"
+  type = "container"
+
+  retry_strategy = {
+    attempts = 2
+  }
+
+  timeout = {
+    # 55min - so jobs are usually killed before next issue starts
+    attempt_duration_seconds = 3300
+  }
+
+  #replace(replace(...)) as workaround for terraform bug,
+  #as per https://github.com/hashicorp/terraform/issues/17033#issuecomment-399908596
+  container_properties = "${replace(replace(jsonencode(local.container_properties),
+                                    "/\"(true|false|[[:digit:]]+)\"/", "$1"
+                                      ), "string:",
+                                      "")}"
 }
 
 resource "aws_batch_job_queue" "main_queue" {
