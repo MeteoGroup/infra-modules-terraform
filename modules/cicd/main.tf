@@ -1,8 +1,6 @@
 data "aws_caller_identity" "default" {}
 
-data "aws_region" "default" {
-  current = true
-}
+data "aws_region" "default" {}
 
 resource "aws_s3_bucket" "default" {
   bucket = "${var.name_prefix}"
