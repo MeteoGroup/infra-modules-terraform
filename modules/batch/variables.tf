@@ -16,6 +16,10 @@ variable "job_policy_document" {}
 
 variable "repository_url" {}
 
+variable "command_array" {
+  type = "list"
+}
+
 variable "environment_variables" {
   type = "list"
 }

@@ -114,7 +114,6 @@ resource "aws_batch_compute_environment" "this" {
   }
 }
 
-
 data "aws_ami" "ecs_optimized_latest" {
   most_recent = true
   owners      = ["amazon"]
@@ -151,15 +150,16 @@ resource "aws_launch_template" "this" {
 
   network_interfaces {
     associate_public_ip_address = true
-    delete_on_termination = true
-    security_groups = ["${var.security_group}"]
-    subnet_id = "${var.subnet}"
+    delete_on_termination       = true
+    security_groups             = ["${var.security_group}"]
+    subnet_id                   = "${var.subnet}"
   }
 
   tag_specifications {
     resource_type = "instance"
     tags          = "${var.tags}"
   }
+
   tag_specifications {
     resource_type = "volume"
     tags          = "${var.tags}"
@@ -167,7 +167,6 @@ resource "aws_launch_template" "this" {
 
   user_data = "${base64encode(local.instance_user_data)}"
 }
-
 
 data "aws_iam_policy_document" "job_assume_role" {
   statement {
@@ -191,33 +190,30 @@ resource "aws_iam_role_policy" "job_main" {
   role   = "${aws_iam_role.job.id}"
 }
 
-
 locals {
   container_properties = {
-    command = [
-      "python",
-      "-m",
-      "app.main",
-      "Ref::event"
-    ],
-    image = "${var.repository_url}:latest",
-    jobRoleArn = "${aws_iam_role.job.arn}",
-    vcpus = "${var.job_vcpus}",
-    memory = "${var.job_memory}",
-    environment = "${var.environment_variables}",
+    command     = "${var.command_array}"
+    image       = "${var.repository_url}:latest"
+    jobRoleArn  = "${aws_iam_role.job.arn}"
+    vcpus       = "${var.job_vcpus}"
+    memory      = "${var.job_memory}"
+    environment = "${var.environment_variables}"
+
     volumes = [
       {
         host = {
           sourcePath = "/tmp"
-        },
+        }
+
         name = "tmp"
-      }
-    ],
+      },
+    ]
+
     mountPoints = [
       {
-        sourceVolume = "tmp",
+        sourceVolume  = "tmp"
         containerPath = "/tmp"
-      }
+      },
     ]
   }
 }
@@ -243,7 +239,6 @@ resource "aws_batch_job_definition" "this" {
                                     "string:",
                                     "")}"
 }
-
 
 resource "aws_batch_job_queue" "main_queue" {
   name     = "${var.name_prefix}"
