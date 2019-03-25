@@ -105,7 +105,7 @@ resource "aws_batch_compute_environment" "this" {
   type         = "MANAGED"
 
   compute_resources {
-    instance_role = "${aws_iam_instance_profile.ecs_instance_role.arn}"
+    instance_role = "${aws_iam_instance_profile.batch_instance.arn}"
 
     instance_type = [
       "${var.instance_type}",
@@ -156,7 +156,7 @@ SCRIPT
 #  name       = "${var.name_prefix}"
 #
 #  iam_instance_profile {
-#    name = "${aws_iam_instance_profile.batch_instance.name}"
+#    name = "${}"
 #  }
 #
 #  image_id = "${data.aws_ami.ecs_optimized_latest.image_id}"
