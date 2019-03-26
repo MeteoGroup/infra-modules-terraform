@@ -5,7 +5,7 @@ output "project_name" {
 
 output "project_id" {
   description = "Project ID"
-  value       = "${join("", aws_codebuild_project.default.*.id)}"
+  value       = "${signum(length(var.vpc_id)) == 1 ? join("", aws_codebuild_project.within_vpc.*.id) : join("", aws_codebuild_project.default.*.id)}"
 }
 
 output "role_arn" {
