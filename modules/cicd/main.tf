@@ -117,6 +117,43 @@ data "aws_iam_policy_document" "codebuild" {
     resources = ["${module.build.project_id}"]
     effect    = "Allow"
   }
+
+  statement {
+    sid = ""
+
+    actions = [
+      "ec2:CreateNetworkInterface",
+      "ec2:DescribeDhcpOptions",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DeleteNetworkInterface",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeVpcs",
+    ]
+
+    resources = ["*"]
+    effect    = "Allow"
+  }
+
+  statement {
+    sid = ""
+
+    actions = [
+      "ec2:CreateNetworkInterfacePermission",
+    ]
+
+    resources = [
+      "arn:aws:ec2:${data.aws_region.default.name}:${data.aws_caller_identity.id}:network-interface/*",
+    ]
+
+    condition {
+      test     = "StringEquals"
+      variable = "ec2:AuthorizedService"
+      values   = ["codebuild.amazonaws.com"]
+    }
+
+    effect = "Allow"
+  }
 }
 
 module "build" {
