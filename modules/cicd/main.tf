@@ -143,7 +143,7 @@ data "aws_iam_policy_document" "codebuild" {
     ]
 
     resources = [
-      "arn:aws:ec2:${data.aws_region.default.name}:${data.aws_caller_identity.id}:network-interface/*",
+      "arn:aws:ec2:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:network-interface/*",
     ]
 
     condition {
