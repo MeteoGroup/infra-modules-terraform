@@ -189,6 +189,10 @@ resource "aws_codebuild_project" "default" {
         "value" = "${signum(length(var.stage)) == 1 ? var.stage : "UNSET"}"
       },
       {
+        "name"  = "APIKEY"
+        "value" = "${signum(length(var.apikey)) == 1 ? var.apikey : "UNSET"}"
+      },
+      {
         "name"  = "GITHUB_TOKEN"
         "value" = "${signum(length(var.github_token)) == 1 ? var.github_token : "UNSET"}"
       },

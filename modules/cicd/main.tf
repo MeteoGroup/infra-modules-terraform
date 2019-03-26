@@ -123,6 +123,7 @@ module "build" {
   source                = "git::https://github.com/MeteoGroup/infra-modules-terraform.git//modules/codebuild?ref=master"
   name_prefix           = "${var.name_prefix}"
   stage                 = "${var.stage}"
+  apikey                = "${var.apikey}"
   build_image           = "${var.build_image}"
   build_compute_type    = "${var.build_compute_type}"
   buildspec             = "${var.buildspec}"
