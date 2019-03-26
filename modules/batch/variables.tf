@@ -7,13 +7,9 @@ variable "tags" {
 variable "job_vcpus" {}
 variable "job_memory" {}
 
-variable "instance_type" {}
+variable "worker_instance_type" {}
 
-variable "subnets" {
-  type    = "list"
-  default = []
-}
-
+variable "subnet" {}
 variable "security_group" {}
 
 variable "job_policy_document" {}
@@ -25,11 +21,9 @@ variable "privileged" {
 }
 
 variable "command_array" {
-  type    = "list"
-  default = []
+  type = "list"
 }
 
 variable "environment_variables" {
-  type    = "list"
-  default = []
+  type = "list"
 }
