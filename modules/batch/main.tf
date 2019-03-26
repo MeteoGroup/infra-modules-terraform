@@ -102,32 +102,7 @@ resource "aws_batch_compute_environment" "this" {
   compute_environment_name = "${var.name_prefix}"
 
   service_role = "${aws_iam_role.batch_service.arn}"
-<<<<<<< HEAD
-  type         = "MANAGED"
-
-  compute_resources {
-    instance_role = "${aws_iam_instance_profile.batch_instance.arn}"
-
-    instance_type = [
-      "${var.instance_type}",
-    ]
-
-    max_vcpus = 16
-    min_vcpus = 0
-
-    security_group_ids = [
-      "${var.security_group}",
-    ]
-
-    subnets = [
-      "${var.subnets}",
-    ]
-
-    type = "EC2"
-  }
-=======
   type         = "UNMANAGED"
->>>>>>> parent of dd4e99b... Change cluster for managed type
 
   depends_on = [
     "aws_iam_role_policy_attachment.batch_service",
@@ -157,45 +132,6 @@ echo ECS_CLUSTER=${aws_batch_compute_environment.this.ecs_cluster_arn} >> /etc/e
 SCRIPT
 }
 
-<<<<<<< HEAD
-#resource "aws_launch_template" "this" {
-#  depends_on = ["aws_batch_job_definition.this"]
-#  name       = "${var.name_prefix}"
-#
-#  iam_instance_profile {
-#    name = "${}"
-#  }
-#
-#  image_id = "${data.aws_ami.ecs_optimized_latest.image_id}"
-#
-#  instance_initiated_shutdown_behavior = "terminate"
-#
-#  instance_type = "${var.worker_instance_type}"
-#
-#  monitoring {
-#    enabled = true
-#  }
-#
-#  network_interfaces {
-#    associate_public_ip_address = true
-#    delete_on_termination       = true
-#    security_groups             = ["${var.security_group}"]
-#    subnet_id                   = "${var.subnet}"
-#  }
-#
-#  tag_specifications {
-#    resource_type = "instance"
-#    tags          = "${var.tags}"
-#  }
-#
-#  tag_specifications {
-#    resource_type = "volume"
-#    tags          = "${var.tags}"
-#  }
-#
-#  user_data = "${base64encode(local.instance_user_data)}"
-#}
-=======
 resource "aws_launch_template" "this" {
   depends_on = ["aws_batch_job_definition.this"]
   name       = "${var.name_prefix}"
@@ -233,7 +169,6 @@ resource "aws_launch_template" "this" {
 
   user_data = "${base64encode(local.instance_user_data)}"
 }
->>>>>>> parent of dd4e99b... Change cluster for managed type
 
 data "aws_iam_policy_document" "job_assume_role" {
   statement {
