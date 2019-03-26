@@ -135,6 +135,9 @@ module "build" {
   image_tag             = "${var.image_tag}"
   github_token          = "${var.github_oauth_token}"
   environment_variables = "${var.environment_variables}"
+  vpc_id                = "${var.vpc_id}"
+  subnets               = "${var.subnets}"
+  security_groups       = "${var.security_groups}"
 }
 
 resource "aws_iam_role_policy_attachment" "codebuild_s3" {

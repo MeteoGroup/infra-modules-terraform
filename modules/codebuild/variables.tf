@@ -145,3 +145,21 @@ variable "report_build_status" {
   default     = "false"
   description = "Set to true to report the status of a build's start and finish to your source provider. This option is only valid when the source_type is BITBUCKET or GITHUB."
 }
+
+variable "vpc_id" {
+  type        = "string"
+  default     = ""
+  description = "VPC ID for the builds to run inside"
+}
+
+variable "subnets" {
+  type        = "list"
+  default     = []
+  description = "A list of subnets for the build to run inside VPC"
+}
+
+variable "security_groups" {
+  type        = "list"
+  default     = []
+  description = "A list of security groups for the build to run inside VPC"
+}
