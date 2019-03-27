@@ -3,9 +3,10 @@ data "aws_caller_identity" "default" {}
 data "aws_region" "default" {}
 
 resource "aws_s3_bucket" "default" {
-  bucket = "${var.name_prefix}"
-  acl    = "private"
-  tags   = "${var.tags}"
+  bucket        = "${var.name_prefix}"
+  acl           = "private"
+  force_destroy = true
+  tags          = "${var.tags}"
 }
 
 resource "aws_iam_role" "default" {
