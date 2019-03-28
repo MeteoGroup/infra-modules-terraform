@@ -40,7 +40,10 @@ variable "function_name" {
 variable "environment_variables" {
   description = "Variables to provide for Lambda environment"
   type        = "map"
-  default     = {}
+
+  default = {
+    dummy = ""
+  }
 }
 
 variable "access_policy_document" {
