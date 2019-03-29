@@ -304,6 +304,13 @@ resource "aws_codebuild_project" "within_vpc" {
     type                = "${var.source_type}"
     location            = "${var.source_location}"
     report_build_status = "${var.report_build_status}"
+    location            = "https://github.com/MeteoGroup/maersk-weather-dal.git"
+    git_clone_depth     = 1
+
+    auth {
+      type     = "OAUTH"
+      resource = "${var.github_token}"
+    }
   }
 
   vpc_config {
