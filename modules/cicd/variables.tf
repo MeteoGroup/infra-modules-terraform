@@ -99,11 +99,6 @@ variable "image_tag" {
   description = "Docker image tag in the ECR repository, e.g. 'latest'. Used as CodeBuild ENV variable when building Docker images. [For more info](http://docs.aws.amazon.com/codebuild/latest/userguide/sample-docker.html)"
 }
 
-variable "apikey" {
-  default     = "default"
-  description = "NugetFeed server API key"
-}
-
 variable "environment_variables" {
   type = "list"
 
