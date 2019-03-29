@@ -134,7 +134,7 @@ module "build" {
   aws_account_id        = "${signum(length(var.aws_account_id)) == 1 ? var.aws_account_id : data.aws_caller_identity.default.account_id}"
   image_repo_name       = "${var.image_repo_name}"
   image_tag             = "${var.image_tag}"
-  github_token          = "${var.github_oauth_token}"
+  github_token          = "${var.github_token}"
   environment_variables = "${var.environment_variables}"
   vpc_id                = "${var.vpc_id}"
   subnets               = "${var.subnets}"
@@ -185,7 +185,7 @@ resource "aws_codepipeline" "source_build_deploy" {
       output_artifacts = ["code"]
 
       configuration {
-        OAuthToken           = "${var.github_oauth_token}"
+        OAuthToken           = "${var.github_token}"
         Owner                = "${var.repo_owner}"
         Repo                 = "${var.repo_name}"
         Branch               = "${var.branch}"
@@ -255,7 +255,7 @@ resource "aws_codepipeline" "source_build" {
       output_artifacts = ["code"]
 
       configuration {
-        OAuthToken           = "${var.github_oauth_token}"
+        OAuthToken           = "${var.github_token}"
         Owner                = "${var.repo_owner}"
         Repo                 = "${var.repo_name}"
         Branch               = "${var.branch}"
