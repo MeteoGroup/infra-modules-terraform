@@ -284,10 +284,6 @@ resource "aws_codebuild_project" "within_vpc" {
         "value" = "${signum(length(var.stage)) == 1 ? var.stage : "UNSET"}"
       },
       {
-        "name"  = "APIKEY"
-        "value" = "${signum(length(var.apikey)) == 1 ? var.apikey : "UNSET"}"
-      },
-      {
         "name"  = "GITHUB_TOKEN"
         "value" = "${signum(length(var.github_token)) == 1 ? var.github_token : "UNSET"}"
       },
@@ -351,10 +347,6 @@ resource "aws_codebuild_project" "within_vpc_nopipeline" {
       {
         "name"  = "STAGE"
         "value" = "${signum(length(var.stage)) == 1 ? var.stage : "UNSET"}"
-      },
-      {
-        "name"  = "APIKEY"
-        "value" = "${signum(length(var.apikey)) == 1 ? var.apikey : "UNSET"}"
       },
       {
         "name"  = "GITHUB_TOKEN"
