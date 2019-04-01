@@ -11,7 +11,7 @@ variable "hosted_zone_id" {
 }
 
 variable "tags" {
+  description = "Additional tags (e.g. `map('Project', 'ABC')`"
   type        = "map"
   default     = {}
-  description = "Additional tags (e.g. `map('Project', 'ABC')`"
 }

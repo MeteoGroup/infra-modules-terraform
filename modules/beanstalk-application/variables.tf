@@ -9,13 +9,13 @@ variable "stage" {
 }
 
 variable "description" {
-  default     = ""
   description = "Description"
   type        = "string"
+  default     = ""
 }
 
 variable "tags" {
+  description = "Additional tags (e.g. `map('BusinessUnit','XYZ')`)"
   type        = "map"
   default     = {}
-  description = "Additional tags (e.g. `map('BusinessUnit','XYZ')`)"
 }
