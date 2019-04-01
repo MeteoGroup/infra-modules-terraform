@@ -1,6 +1,6 @@
 # lambda [![Latest Release](https://img.shields.io/github/release/MeteoGroup/infra-modules-terraform.svg)](https://github.com/MeteoGroup/infra-modules-terraform/releases/latest)
 
-Terraform module designed to generate  AWS Lambda. 
+Terraform module designed to generate  AWS Lambda function. 
 
 It's Open Source and licensed under the [APACHE2](LICENSE).
 
@@ -47,8 +47,8 @@ module "lambda" {
 
 | Name | Description |
 |------|-------------|
-| arn | ARN of  |
-| invoke_arn | |
+| arn | ARN of Lambda Function |
+| invoke_arn | Invokes ARN of Lambda Function|
 
 
 
