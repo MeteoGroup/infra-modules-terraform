@@ -39,7 +39,7 @@ module "batch" {
 |------|-------------|:----:|:-----:|:-----:|
 | name_prefix | Solution name | string | `` | yes |
 | tags | Additional tags (e.g. `map('Project', 'ABC')` | map | `` | no |
-| job_vcpus | The number of vCPUs reserved for the container. | string | | |
+| job_vcpus | The number of vCPUs reserved for the container. | string | `` | |
 | job_memory | The hard limit (in MiB) of memory to present to the container. | string | `` | |
 | worker_instance_type | Instance types that may be launched | string | `` | |
 | subnet | VPC subnets into which the compute resources are launched | string | `` | | 
