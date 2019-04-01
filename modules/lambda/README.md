@@ -29,16 +29,26 @@ module "lambda" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| name | Host name that will be added to the DNS zone to form FQDN, e.g. 'alb' or 'www' | string | `` | yes |
-| hosted_zone_id | DNS zone ID where record will be created and certificate validated | string | `` | yes |
-| tags | Additional tags (e.g. `map('Project','ABC')` | map | `<map>` | no |
+| runtime | Language to use for Lambda | string | `` | yes |
+| handler | Program entrypoint for Lambda | string | `` | yes |
+| timeout | Timeout after which Lamdba will terminate | string | `10` | yes |
+| source_bucket | Bucket to use for loading Lambda source ZIP | string | `` | no |
+| source_prefix | S3 prefix to use for loading Lambda ZIP | string | `` | yes |
+| source_version | Version of Lambda ZIP to use | string | `` | no |
+| function_name | Name for Lambda function | string | `` | no |
+| environment_variables | Variables to provide for Lambda environment | map | `` | no |
+| access_policy_document | IAM policy provided to Lambda role | string | `` | no |
+| source_types | Source types which are allowed to invoke the Lambda. Must align with entries in source_arns variable | list | `` | yes |
+| source_arns | Source ARNs which are allowed to invoke the Lambda. Must align with entries in source_types variable | list | `` | no |
+
 
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| cert_arn | ARN of ACM certificate |
+| arn | ARN of  |
+| invoke_arn | |
 
 
 
