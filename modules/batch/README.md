@@ -39,16 +39,16 @@ module "batch" {
 |------|-------------|:----:|:-----:|:-----:|
 | name_prefix | Solution name | string | `` | yes |
 | tags | Additional tags (e.g. `map('Project', 'ABC')` | map | `` | no |
-| job_vcpus | The number of vCPUs reserved for the container. |  | | |
-| job_memory | The hard limit (in MiB) of memory to present to the container. |  | | |
-| worker_instance_type | Instance types that may be launched | | | |
-| subnet | VPC subnets into which the compute resources are launched | | | | 
-| security_group | A list of EC2 security group that are associated with instances launched in the compute environment. | | | | 
-| job_policy_document | Job definitions policy | | | |
-| repository_url | url to image used to start a container. | | | |
-| privileged | When this parameter is true, the container is given elevated privileges on the host container instance (similar to the root user) | | | |
-| command_array | The command that is passed to the container | | | |
-| environment_variables | The environment variables to pass to a container | | | |
+| job_vcpus | The number of vCPUs reserved for the container. | string | | |
+| job_memory | The hard limit (in MiB) of memory to present to the container. | string | `` | |
+| worker_instance_type | Instance types that may be launched | string | `` | |
+| subnet | VPC subnets into which the compute resources are launched | string | `` | | 
+| security_group | A list of EC2 security group that are associated with instances launched in the compute environment. | string | `` | | 
+| job_policy_document | Job definitions policy | string | `` | |
+| repository_url | url to image used to start a container. | string | `` | |
+| privileged | When this parameter is true, the container is given elevated privileges on the host container instance (similar to the root user) | string | `false` | |
+| command_array | The command that is passed to the container | list | `` | |
+| environment_variables | The environment variables to pass to a container | list | `` | |
 
 
 
