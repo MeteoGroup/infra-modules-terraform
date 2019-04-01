@@ -309,7 +309,7 @@ resource "aws_codebuild_project" "within_vpc" {
 }
 
 resource "aws_codebuild_project" "within_vpc_nopipeline" {
-  count         = "${var.enabled == "true" && signum(length(var.source_location)) && signum(length(var.vpc_id)) == 1 ? 1 : 0}"
+  count         = "${var.enabled == "true" && signum(length(var.source_location)) == 1 ? 1 : 0}"
   name          = "${var.name_prefix}"
   service_role  = "${aws_iam_role.default.arn}"
   badge_enabled = "${var.badge_enabled}"
