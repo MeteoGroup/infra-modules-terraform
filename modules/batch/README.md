@@ -37,18 +37,18 @@ module "batch" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| name_prefix |  | string | `` | yes |
-| tags |   | map | `` | no |
-| job_vcpus |   | | | |
-| job_memory |   | | | |
-| worker_instance_type |  | | | |
-| subnet |  | | | | 
-| security_group | | | | | 
-| job_policy_document | | | | |
-| repository_url | | | | |
-| privileged | | | | |
-| command_array | | | | |
-| environment_variables | | | | |
+| name_prefix | Solution name | string | `` | yes |
+| tags | Additional tags (e.g. `map('Project', 'ABC')` | map | `` | no |
+| job_vcpus | The number of vCPUs reserved for the container. | Integer | | |
+| job_memory | The hard limit (in MiB) of memory to present to the container. | Integer | Integer | |
+| worker_instance_type | Instance types that may be launched | | | |
+| subnet | VPC subnets into which the compute resources are launched | | | | 
+| security_group | A list of EC2 security group that are associated with instances launched in the compute environment. | | | | 
+| job_policy_document | Job definitions policy | | | |
+| repository_url | url to image used to start a container. | | | |
+| privileged | When this parameter is true, the container is given elevated privileges on the host container instance (similar to the root user) | | | |
+| command_array | The command that is passed to the container | | | |
+| environment_variables | The environment variables to pass to a container | | | |
 
 
 
