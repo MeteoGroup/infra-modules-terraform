@@ -1,11 +1,11 @@
 output "project_name" {
   description = "Project name"
-  value       = "${signum(length(var.vpc_id)) == 1 ? join("", aws_codebuild_project.within_vpc.*.name) : join("", aws_codebuild_project.default.*.name)}"
+  value       = "${var.build_only == "false" ? join("", aws_codebuild_project.within_vpc.*.name) : join("", aws_codebuild_project.within_vpc_nopipeline.*.name)}"
 }
 
 output "project_id" {
   description = "Project ID"
-  value       = "${signum(length(var.vpc_id)) == 1 ? join("", aws_codebuild_project.within_vpc.*.id) : join("", aws_codebuild_project.default.*.id)}"
+  value       = "${var.build_only == "false" ? join("", aws_codebuild_project.within_vpc.*.id) : join("", aws_codebuild_project.within_vpc_nopipeline.*.id)}"
 }
 
 output "role_arn" {
@@ -20,5 +20,5 @@ output "cache_bucket_name" {
 
 output "badge_url" {
   description = "The URL of the build badge when badge_enabled is enabled"
-  value       = "${join("", aws_codebuild_project.default.*.badge_url)}"
+  value       = "${var.build_only == "false" ? join("", aws_codebuild_project.within_vpc.*.badge_url) : join("", aws_codebuild_project.within_vpc_nopipeline.*.badge_url)}"
 }
