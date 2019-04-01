@@ -1,6 +1,6 @@
 # Batch [![Latest Release](https://img.shields.io/github/release/MeteoGroup/infra-modules-terraform.svg)](https://github.com/MeteoGroup/infra-modules-terraform/releases/latest)
 
-Terraform module designed to generate  AWS Batch jobs. 
+Terraform module designed to generate for easily and efficiently run hundreds of thousands of batch computing jobs on AWS. 
 
 It's Open Source and licensed under the [APACHE2](LICENSE).
 
@@ -37,14 +37,28 @@ module "batch" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| runtime | Language to use for Lambda | string | `` | yes |
+| name_prefix |  | string | `` | yes |
+| tags |   | map | `` | no |
+| job_vcpus |   | | | |
+| job_memory |   | | | |
+| worker_instance_type |  | | | |
+| subnet |  | | | | 
+| security_group | | | | | 
+| job_policy_document | | | | |
+| repository_url | | | | |
+| privileged | | | | |
+| command_array | | | | |
+| environment_variables | | | | |
+
 
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| arn | ARN of Lambda Function |
+| definition_arn |  |
+| queue_arn | |
+| iam_role_batch_instance_arn | | 
 
 
 ## Copyright

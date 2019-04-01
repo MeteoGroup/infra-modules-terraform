@@ -1,29 +1,51 @@
-variable "name_prefix" {}
-
-variable "tags" {
-  type = "map"
+variable "name_prefix" {
+  description = ""
 }
 
-variable "job_vcpus" {}
-variable "job_memory" {}
+variable "tags" {
+  description = ""
+  type        = "map"
+}
 
-variable "worker_instance_type" {}
+variable "job_vcpus" {
+  description = ""
+}
 
-variable "subnet" {}
-variable "security_group" {}
+variable "job_memory" {
+  description = ""
+}
 
-variable "job_policy_document" {}
+variable "worker_instance_type" {
+  description = ""
+}
 
-variable "repository_url" {}
+variable "subnet" {
+  description = ""
+}
+
+variable "security_group" {
+  description = ""
+}
+
+variable "job_policy_document" {
+  description = ""
+}
+
+variable "repository_url" {
+  description = ""
+}
 
 variable "privileged" {
-  default = "false"
+  description = ""
+  default     = "false"
 }
 
 variable "command_array" {
-  type = "list"
+  description = ""
+  type        = "list"
 }
 
 variable "environment_variables" {
-  type = "list"
+  description = ""
+  type        = "list"
 }
