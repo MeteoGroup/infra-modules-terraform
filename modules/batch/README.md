@@ -39,8 +39,8 @@ module "batch" {
 |------|-------------|:----:|:-----:|:-----:|
 | name_prefix | Solution name | string | `` | yes |
 | tags | Additional tags (e.g. `map('Project', 'ABC')` | map | `` | no |
-| job_vcpus | The number of vCPUs reserved for the container. | Integer | | |
-| job_memory | The hard limit (in MiB) of memory to present to the container. | Integer | Integer | |
+| job_vcpus | The number of vCPUs reserved for the container. |  | | |
+| job_memory | The hard limit (in MiB) of memory to present to the container. |  | | |
 | worker_instance_type | Instance types that may be launched | | | |
 | subnet | VPC subnets into which the compute resources are launched | | | | 
 | security_group | A list of EC2 security group that are associated with instances launched in the compute environment. | | | | 
