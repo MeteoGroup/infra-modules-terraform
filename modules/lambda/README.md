@@ -13,12 +13,12 @@ It's Open Source and licensed under the [APACHE2](LICENSE).
 module "lambda" {
   source                 = "git::https://github.com/MeteoGroup/infra-modules-terraform.git//modules/lambda?ref=master"
   runtime                = "nodejs8.10"
-  handler                = "${local.prefix}.handler"
+  handler                = "${local.handler}"
   source_bucket          = "${local.artifacts_bucket}"
   source_prefix          = "${local.prefix}"
   source_version         = "${local.version}"
   access_policy_document = "${data.aws_iam_policy_document.lambda_access.json}"
-  function_name          = "name-${local.prefix}"
+  function_name          = "${local.prefix}-name"
   source_types           = ["events"]
   source_arns            = ["${aws_cloudwatch_event_rule.build_result.arn}"]
 }
