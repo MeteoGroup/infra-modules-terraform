@@ -185,66 +185,8 @@ resource "aws_iam_role_policy_attachment" "default_cache_bucket" {
   role       = "${aws_iam_role.default.id}"
 }
 
-resource "aws_codebuild_project" "default" {
-  count         = "${var.enabled == "true" && signum(length(var.vpc_id)) == 0 ? 1 : 0}"
-  name          = "${var.name_prefix}"
-  service_role  = "${aws_iam_role.default.arn}"
-  badge_enabled = "${var.badge_enabled}"
-  build_timeout = "${var.build_timeout}"
-
-  artifacts {
-    type = "${var.artifact_type}"
-  }
-
-  # The cache as a list with a map object inside.
-  cache = ["${local.cache}"]
-
-  environment {
-    compute_type    = "${var.build_compute_type}"
-    image           = "${var.build_image}"
-    type            = "LINUX_CONTAINER"
-    privileged_mode = "${var.privileged_mode}"
-
-    environment_variable = [{
-      "name"  = "AWS_REGION"
-      "value" = "${signum(length(var.aws_region)) == 1 ? var.aws_region : data.aws_region.default.name}"
-    },
-      {
-        "name"  = "AWS_ACCOUNT_ID"
-        "value" = "${signum(length(var.aws_account_id)) == 1 ? var.aws_account_id : data.aws_caller_identity.default.account_id}"
-      },
-      {
-        "name"  = "IMAGE_REPO_NAME"
-        "value" = "${signum(length(var.image_repo_name)) == 1 ? var.image_repo_name : "UNSET"}"
-      },
-      {
-        "name"  = "IMAGE_TAG"
-        "value" = "${signum(length(var.image_tag)) == 1 ? var.image_tag : "latest"}"
-      },
-      {
-        "name"  = "STAGE"
-        "value" = "${signum(length(var.stage)) == 1 ? var.stage : "UNSET"}"
-      },
-      {
-        "name"  = "GITHUB_TOKEN"
-        "value" = "${signum(length(var.github_token)) == 1 ? var.github_token : "UNSET"}"
-      },
-      "${var.environment_variables}",
-    ]
-  }
-
-  source {
-    buildspec           = "${var.buildspec}"
-    type                = "${var.source_type}"
-    location            = "${var.source_location}"
-    report_build_status = "${var.report_build_status}"
-  }
-
-  tags = "${var.tags}"
-}
-
 resource "aws_codebuild_project" "within_vpc" {
-  count         = "${var.enabled == "true" && signum(length(var.vpc_id)) == 1 ? 1 : 0}"
+  count         = "${var.enabled == "true" && var.build_only == "false" ? 1 : 0}"
   name          = "${var.name_prefix}"
   service_role  = "${aws_iam_role.default.arn}"
   badge_enabled = "${var.badge_enabled}"
@@ -309,7 +251,7 @@ resource "aws_codebuild_project" "within_vpc" {
 }
 
 resource "aws_codebuild_project" "within_vpc_nopipeline" {
-  count         = "${var.enabled == "true" && signum(length(var.source_location)) == 1 ? 1 : 0}"
+  count         = "${var.enabled == "true" && var.build_only == "true" ? 1 : 0}"
   name          = "${var.name_prefix}"
   service_role  = "${aws_iam_role.default.arn}"
   badge_enabled = "${var.badge_enabled}"

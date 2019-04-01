@@ -27,6 +27,12 @@ variable "enabled" {
   description = "A boolean to enable/disable resource creation"
 }
 
+variable "build_only" {
+  type        = "string"
+  default     = "false"
+  description = "A boolean to enable/disable build only creation"
+}
+
 variable "cache_enabled" {
   type        = "string"
   default     = "true"
