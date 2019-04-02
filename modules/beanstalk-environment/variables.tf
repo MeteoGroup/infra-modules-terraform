@@ -216,11 +216,13 @@ variable "vpc_id" {
 variable "public_subnets" {
   description = "List of public subnets to place Elastic Load Balancer"
   type        = "list"
+  default     = []
 }
 
 variable "private_subnets" {
   description = "List of private subnets to place EC2 instances"
   type        = "list"
+  default     = []
 }
 
 variable "keypair" {
