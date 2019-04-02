@@ -1,6 +1,7 @@
 variable "stage" {
   description = "Stage, e.g. 'prod', 'staging', 'dev', or 'test'"
   type        = "string"
+  default     = ""
 }
 
 variable "name_prefix" {
@@ -203,11 +204,13 @@ variable "security_groups" {
 variable "app" {
   description = "EBS application name"
   type        = "string"
+  default     = ""
 }
 
 variable "vpc_id" {
   description = "ID of the VPC in which to provision the AWS resources"
   type        = "string"
+  default     = ""
 }
 
 variable "public_subnets" {
@@ -223,6 +226,7 @@ variable "private_subnets" {
 variable "keypair" {
   description = "Name of SSH key that will be deployed on Elastic Beanstalk and DataPipeline instance. The key should be present in AWS"
   type        = "string"
+  default     = ""
 }
 
 variable "root_volume_size" {

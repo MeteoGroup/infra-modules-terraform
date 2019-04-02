@@ -31,21 +31,25 @@ variable "env" {
 variable "github_token" {
   description = "GitHub Oauth Token with permissions to access private repositories"
   type        = "string"
+  default     = ""
 }
 
 variable "repo_owner" {
   description = "GitHub Organization or Person name"
   type        = "string"
+  default     = ""
 }
 
 variable "repo_name" {
   description = "GitHub repository name of the application to be built (and deployed to Elastic Beanstalk if configured)"
   type        = "string"
+  default     = ""
 }
 
 variable "branch" {
   description = "Branch of the GitHub repository, _e.g._ ``master``"
   type        = "string"
+  default     = ""
 }
 
 variable "build_image" {
