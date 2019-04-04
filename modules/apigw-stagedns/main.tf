@@ -7,7 +7,7 @@ locals {
 }
 
 module "api_deployment" {
-  source = "../api-deployment"
+  source = "../apigw-deployment"
 
   api_id = "${var.api_id}"
 
