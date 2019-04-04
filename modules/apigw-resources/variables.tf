@@ -16,6 +16,7 @@ variable "resource" {
 variable "methods" {
   description = "List of resource methods"
   type        = "list"
+  default     = []
 }
 
 variable "num_methods" {
