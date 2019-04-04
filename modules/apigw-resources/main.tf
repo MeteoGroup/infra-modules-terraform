@@ -75,7 +75,7 @@ data "template_file" "method" {
 }
 
 module "resource_cors" {
-  source = "../api-gateway-cors"
+  source = "../apigw-cors"
 
   api      = "${var.api}"
   resource = "${aws_api_gateway_resource.resource.id}"
