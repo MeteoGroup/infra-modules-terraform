@@ -426,7 +426,7 @@ resource "aws_codebuild_project" "default" {
       },
       {
         "name"  = "GITHUB_TOKEN"
-        "value" = "${signum(length(var.github_oauth_token)) == 1 ? var.github_oauth_token : "UNSET"}"
+        "value" = "${signum(length(var.github_token)) == 1 ? var.github_token : "UNSET"}"
       },
       "${var.environment_variables}",
     ]
