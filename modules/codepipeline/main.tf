@@ -179,7 +179,7 @@ resource "aws_codepipeline" "source_build_deploy" {
       output_artifacts = ["code"]
 
       configuration {
-        OAuthToken           = "${var.github_oauth_token}"
+        OAuthToken           = "${var.github_token}"
         Owner                = "${var.repo_owner}"
         Repo                 = "${var.repo_name}"
         Branch               = "${var.branch}"
@@ -249,7 +249,7 @@ resource "aws_codepipeline" "source_build" {
       output_artifacts = ["code"]
 
       configuration {
-        OAuthToken           = "${var.github_oauth_token}"
+        OAuthToken           = "${var.github_token}"
         Owner                = "${var.repo_owner}"
         Repo                 = "${var.repo_name}"
         Branch               = "${var.branch}"

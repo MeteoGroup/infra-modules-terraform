@@ -32,7 +32,7 @@ variable "env" {
   description = "Elastic Beanstalk environment name. If not provided or set to empty string, the ``Deploy`` stage of the pipeline will not be created"
 }
 
-variable "github_oauth_token" {
+variable "github_token" {
   description = "GitHub Oauth Token with permissions to access private repositories"
 }
 
