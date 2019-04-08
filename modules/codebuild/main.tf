@@ -95,12 +95,7 @@ data "aws_iam_policy_document" "permissions" {
     sid = ""
 
     actions = [
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:CompleteLayerUpload",
-      "ecr:GetAuthorizationToken",
-      "ecr:InitiateLayerUpload",
-      "ecr:PutImage",
-      "ecr:UploadLayerPart",
+      "ecr:*",
       "ecs:RunTask",
       "iam:PassRole",
       "logs:CreateLogGroup",
@@ -109,8 +104,14 @@ data "aws_iam_policy_document" "permissions" {
       "ssm:GetParameters",
     ]
 
-    effect = "Allow"
+    #      "ecr:BatchCheckLayerAvailability",
+    #      "ecr:CompleteLayerUpload",
+    #      "ecr:GetAuthorizationToken",
+    #      "ecr:InitiateLayerUpload",
+    #      "ecr:PutImage",
+    #      "ecr:UploadLayerPart",
 
+    effect = "Allow"
     resources = [
       "*",
     ]
