@@ -120,23 +120,6 @@ data "aws_iam_policy_document" "permissions" {
     sid = ""
 
     actions = [
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:BatchGetImage",
-      "ecr:BatchCheckLayerAvailability",
-    ]
-
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.default.account_id}:root"]
-    }
-
-    effect = "Allow"
-  }
-
-  statement {
-    sid = ""
-
-    actions = [
       "ec2:CreateNetworkInterface",
       "ec2:DescribeDhcpOptions",
       "ec2:DescribeNetworkInterfaces",
