@@ -95,7 +95,12 @@ data "aws_iam_policy_document" "permissions" {
     sid = ""
 
     actions = [
-      "ecr:*",
+      "ecr:BatchCheckLayerAvailability",
+      "ecr:CompleteLayerUpload",
+      "ecr:GetAuthorizationToken",
+      "ecr:InitiateLayerUpload",
+      "ecr:PutImage",
+      "ecr:UploadLayerPart",
       "ecs:RunTask",
       "iam:PassRole",
       "logs:CreateLogGroup",
@@ -104,17 +109,28 @@ data "aws_iam_policy_document" "permissions" {
       "ssm:GetParameters",
     ]
 
-    #      "ecr:BatchCheckLayerAvailability",
-    #      "ecr:CompleteLayerUpload",
-    #      "ecr:GetAuthorizationToken",
-    #      "ecr:InitiateLayerUpload",
-    #      "ecr:PutImage",
-    #      "ecr:UploadLayerPart",
-
     effect = "Allow"
+
     resources = [
       "*",
     ]
+  }
+
+  statement {
+    sid = ""
+
+    actions = [
+      "ecr:GetDownloadUrlForLayer",
+      "ecr:BatchGetImage",
+      "ecr:BatchCheckLayerAvailability",
+    ]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.default.account_id}:root"]
+    }
+
+    effect = "Allow"
   }
 
   statement {
