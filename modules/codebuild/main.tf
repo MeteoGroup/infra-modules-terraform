@@ -217,10 +217,11 @@ resource "aws_codebuild_project" "within_vpc" {
   cache = ["${local.cache}"]
 
   environment {
-    compute_type    = "${var.build_compute_type}"
-    image           = "${var.build_image}"
-    type            = "LINUX_CONTAINER"
-    privileged_mode = "${var.privileged_mode}"
+    compute_type                = "${var.build_compute_type}"
+    image                       = "${var.build_image}"
+    type                        = "LINUX_CONTAINER"
+    privileged_mode             = "${var.privileged_mode}"
+    image_pull_credentials_type = "SERVICE_ROLE"
 
     environment_variable = [{
       "name"  = "AWS_REGION"
