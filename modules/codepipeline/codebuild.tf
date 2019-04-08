@@ -67,6 +67,11 @@ data "aws_iam_policy_document" "service_codebuild" {
       identifiers = ["codebuild.amazonaws.com"]
     }
 
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.default.account_id}:root"]
+    }
+
     effect = "Allow"
   }
 }
@@ -116,23 +121,6 @@ data "aws_iam_policy_document" "permissions" {
     resources = [
       "*",
     ]
-  }
-
-  statement {
-    sid = ""
-
-    actions = [
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:BatchGetImage",
-      "ecr:BatchCheckLayerAvailability",
-    ]
-
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.default.account_id}:root"]
-    }
-
-    effect = "Allow"
   }
 }
 
