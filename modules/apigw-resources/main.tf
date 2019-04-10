@@ -14,6 +14,10 @@ resource "aws_api_gateway_method" "method" {
 
   count       = "${var.num_methods}"
   http_method = "${lookup(var.methods[count.index], "method")}"
+
+  request_parameters = {
+    "method.request.path.proxy" = true
+  }
 }
 
 # backend resource
@@ -31,6 +35,10 @@ resource "aws_api_gateway_integration" "api_method_integration" {
 
   connection_type = "${lookup(var.methods[count.index], "connection_type")}"
   connection_id   = "${lookup(var.methods[count.index], "connection_id")}"
+
+  request_parameters = {
+    "integration.request.path.proxy" = "method.request.path.proxy"
+  }
 }
 
 resource "aws_api_gateway_integration_response" "integration_response" {
