@@ -50,6 +50,7 @@ data "aws_iam_policy_document" "ecs_execution" {
       "cloudwatch:PutMetricData",
       "cloudwatch:GetMetricStatistics",
       "cloudwatch:GetMetricData",
+      "dynamodb:*",
     ]
 
     resources = ["*"]
