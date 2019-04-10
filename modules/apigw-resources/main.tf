@@ -36,6 +36,9 @@ resource "aws_api_gateway_integration" "api_method_integration" {
   connection_type = "${lookup(var.methods[count.index], "connection_type")}"
   connection_id   = "${lookup(var.methods[count.index], "connection_id")}"
 
+  passthrough_behavior = "WHEN_NO_MATCH"
+  cache_key_parameters = ["method.request.path.proxy"]
+
   request_parameters = {
     "integration.request.path.proxy" = "method.request.path.proxy"
   }
