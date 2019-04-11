@@ -162,6 +162,20 @@ data "aws_iam_policy_document" "permissions" {
 
     effect = "Allow"
   }
+
+  statement {
+    sid = ""
+
+    actions = [
+      "events:Put*",
+      "events:DeleteRule",
+      "events:DescribeRule",
+      "events:List*",
+    ]
+
+    resources = ["*"]
+    effect    = "Allow"
+  }
 }
 
 data "aws_iam_policy_document" "permissions_cache_bucket" {
