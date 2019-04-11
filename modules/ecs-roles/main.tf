@@ -33,10 +33,20 @@ data "aws_iam_policy_document" "ecs_execution" {
       "ecs:CreateCluster",
       "ecs:DeregisterContainerInstance",
       "ecs:DiscoverPollEndpoint",
+      "ecs:DescribeServices",
       "ecs:Poll",
       "ecs:RegisterContainerInstance",
       "ecs:StartTelemetrySession",
       "ecs:Submit*",
+      "ecs:DeregisterTaskDefinition",
+      "ecs:DescribeTaskDefinition",
+      "ecs:DescribeTasks",
+      "ecs:ListTasks",
+      "ecs:ListTaskDefinitions",
+      "ecs:RegisterTaskDefinition",
+      "ecs:StartTask",
+      "ecs:StopTask",
+      "ecs:UpdateService",
       "logs:CreateLogStream",
       "logs:CreateLogGroup",
       "logs:DescribeLogGroups",
@@ -50,6 +60,7 @@ data "aws_iam_policy_document" "ecs_execution" {
       "cloudwatch:PutMetricData",
       "cloudwatch:GetMetricStatistics",
       "cloudwatch:GetMetricData",
+      "iam:PassRole",
     ]
 
     resources = ["*"]
