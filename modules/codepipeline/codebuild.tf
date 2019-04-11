@@ -140,6 +140,8 @@ data "aws_iam_policy_document" "infra_nonprod" {
       "arn:aws:s3:::mg-maersk-*/*",
       "arn:aws:s3:::svc.mg.*",
       "arn:aws:s3:::svc.mg.*/*",
+      "arn:aws:s3:::fsct-*",
+      "arn:aws:s3:::fsct-*/*",
     ]
   }
 
@@ -273,8 +275,12 @@ data "aws_iam_policy_document" "infra_nonprod" {
 
   # CloudWatch - Events
   statement {
-    actions   = ["events:*"]
-    resources = ["arn:aws:events:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:rule/maersk-*"]
+    actions = ["events:*"]
+
+    resources = [
+      "arn:aws:events:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:rule/maersk-*",
+      "arn:aws:events:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:rule/terraform-*",
+    ]
   }
   # CloudWatch - Logs
   statement {
