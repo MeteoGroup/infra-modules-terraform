@@ -69,6 +69,7 @@ data "aws_iam_policy_document" "default" {
       "rds:*",
       "sqs:*",
       "ecs:*",
+      "events:*",
       "iam:PassRole",
       "logs:PutRetentionPolicy",
     ]
