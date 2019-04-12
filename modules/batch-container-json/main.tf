@@ -10,6 +10,13 @@ locals {
 
     volumes = "${var.volumes}"
 
+    volumes = [
+      {
+        host = "${var.host}"
+        name = "${var.volume_name}"
+      },
+    ]
+
     mountPoints = "${var.mount_points}"
 
     environment = "environment_sentinel_value"

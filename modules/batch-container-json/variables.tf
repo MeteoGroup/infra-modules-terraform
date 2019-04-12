@@ -20,6 +20,13 @@ variable "volumes" {
   default = [{}]
 }
 
+variable "host" {
+  type        = "map"
+  description = "Map for host volumes"
+
+  default = {}
+}
+
 variable "mount_points" {
   type        = "list"
   description = "The mount points to configure for the container. This is a list of maps. Each map should contain \"containerPath\", \"sourceVolume\"."
