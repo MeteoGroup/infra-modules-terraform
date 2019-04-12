@@ -1,27 +1,16 @@
 # Environment variables are composed into the container definition at output generation time. See outputs.tf for more information.
 locals {
-  container_definition = {
-    name                   = "${var.container_name}"
-    image                  = "${var.container_image}"
-    memory                 = "${var.container_memory}"
-    memoryReservation      = "${var.container_memory_reservation}"
-    cpu                    = "${var.container_cpu}"
-    essential              = "${var.essential}"
-    entryPoint             = "${var.entrypoint}"
+  container_properties = {
     command                = "${var.command}"
-    workingDirectory       = "${var.working_directory}"
+    image                  = "${var.container_image}"
+    jobRoleArn             = "${var.job_iam_role}"
+    vcpus                  = "${var.container_cpu}"
+    memory                 = "${var.container_memory}"
     readonlyRootFilesystem = "${var.readonly_root_filesystem}"
 
-    portMappings = "${var.port_mappings}"
+    volumes = "${var.volumes}"
 
     mountPoints = "${var.mount_points}"
-
-    healthCheck = "${var.healthcheck}"
-
-    logConfiguration = {
-      logDriver = "${var.log_driver}"
-      options   = "${var.log_options}"
-    }
 
     environment = "environment_sentinel_value"
   }

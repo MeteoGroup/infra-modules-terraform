@@ -6,18 +6,18 @@
 # Environment variables are kept as strings.
 locals {
   encoded_environment_variables = "${jsonencode(local.environment)}"
-  encoded_container_definition  = "${replace(replace(replace(jsonencode(local.container_definition), "/(\\[\\]|\\[\"\"\\]|\"\"|{})/", "null"), "/\"(true|false)\"/", "$1"), "/\"([0-9]+\\.?[0-9]*)\"/", "$1")}"
-  json_map                      = "${replace(local.encoded_container_definition, "/\"environment_sentinel_value\"/", local.encoded_environment_variables)}"
+  encoded_container_properties  = "${replace(replace(replace(jsonencode(local.container_properties), "/(\\[\\]|\\[\"\"\\]|\"\"|{})/", "null"), "/\"(true|false)\"/", "$1"), "/\"([0-9]+\\.?[0-9]*)\"/", "$1")}"
+  json_map                      = "${replace(local.encoded_container_properties, "/\"environment_sentinel_value\"/", local.encoded_environment_variables)}"
 }
 
 output "json" {
-  description = "JSON encoded container definitions for use with other terraform resources such as aws_ecs_task_definition."
+  description = "JSON encoded container properties for use with other terraform resources such as aws_batch_job_definition"
 
   value = "[${local.json_map}]"
 }
 
 output "json_map" {
-  description = "JSON encoded container definitions for use with other terraform resources such as aws_ecs_task_definition."
+  description = "JSON encoded container properties for use with other terraform resources such as aws_batch_job_definition"
 
   value = "${local.json_map}"
 }
