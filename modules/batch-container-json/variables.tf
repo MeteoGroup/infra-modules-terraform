@@ -3,6 +3,11 @@ variable "container_image" {
   description = "The image used to start the container. Images in the Docker Hub registry available by default"
 }
 
+variable "volume_name" {
+  type        = "string"
+  description = "Name for the host volume"
+}
+
 variable "job_iam_role" {
   type        = "string"
   description = "Arn for a Role to use with batch job"
