@@ -8,8 +8,6 @@ locals {
     memory                 = "${var.container_memory}"
     readonlyRootFilesystem = "${var.readonly_root_filesystem}"
 
-    volumes = "${var.volumes}"
-
     volumes = [
       {
         host = "${var.host}"
@@ -18,7 +16,6 @@ locals {
     ]
 
     mountPoints = "${var.mount_points}"
-
     environment = "environment_sentinel_value"
   }
 
