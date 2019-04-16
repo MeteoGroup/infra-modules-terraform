@@ -3,25 +3,11 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   rest_api_id            = "${var.api_id}"
   authorizer_credentials = "${aws_iam_role.invoke.arn}"
 
-  # authorizer_uri                   = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda.arn}/invocations"
-  authorizer_uri                   = "${aws_lambda_function.lambda.invoke_arn}"
+  authorizer_uri                   = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda.arn}/invocations"
   type                             = "TOKEN"
   identity_validation_expression   = "Bearer\\s(\\S+)"
   authorizer_result_ttl_in_seconds = 300
 }
-
-# The action this permission allows is to invoke the function
-#resource "aws_lambda_permission" "allow_api_gateway" {
-#  action        = "lambda:InvokeFunction"
-#  function_name = "${aws_lambda_function.lambda.arn}"
-#  statement_id  = "AllowAPIInvoke"
-#  principal     = "apigateway.amazonaws.com"
-#
-#  # /*/*/* sets this permission for all stages, methods, and resource paths in API Gateway to the lambda function
-#  #source_arn = "${var.api_execution_arn}/*/*/*"
-#  # provides execution arn from stage module
-#  source_arn = "${var.api_execution_arn}/*/*"
-#}
 
 data "aws_iam_policy_document" "assume_lambda" {
   statement {
