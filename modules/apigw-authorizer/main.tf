@@ -9,6 +9,15 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   authorizer_result_ttl_in_seconds = 300
 }
 
+resource "aws_lambda_permission" "lambda_permission" {
+  statement_id  = "AllowAuthorizer"
+  action        = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.authorizer.name}"
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_lambda_function.authorizer.invoke_arn}"
+}
+
 data "aws_iam_policy_document" "assume_lambda" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -82,39 +91,10 @@ resource "aws_iam_role" "invocation_role" {
   name               = "${var.authorizer_name}-api-gateway-auth-invocation"
   path               = "/"
   assume_role_policy = "${data.aws_iam_policy_document.assume_lambda.json}"
-
-  #  assume_role_policy = <<EOF
-  #{
-  #  "Version": "2012-10-17",
-  #  "Statement": [
-  #    {
-  #      "Action": "sts:AssumeRole",
-  #      "Principal": {
-  #        "Service": "apigateway.amazonaws.com"
-  #      },
-  #      "Effect": "Allow",
-  #      "Sid": ""
-  #    }
-  #  ]
-  #}
-  #EOF
 }
 
 resource "aws_iam_role_policy" "invocation_policy" {
   name   = "${var.authorizer_name}-invocation-policy"
   role   = "${aws_iam_role.invocation_role.id}"
   policy = "${data.aws_iam_policy_document.role.json}"
-
-  #  policy = <<EOF
-  #{
-  #  "Version": "2012-10-17",
-  #  "Statement": [
-  #    {
-  #      "Action": "lambda:InvokeFunction",
-  #      "Effect": "Allow",
-  #      "Resource": "${aws_lambda_function.authorizer.arn}"
-  #    }
-  #  ]
-  #}
-  #EOF
 }
