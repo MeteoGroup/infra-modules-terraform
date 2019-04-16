@@ -127,8 +127,13 @@ data "aws_iam_policy_document" "permissions" {
 data "aws_iam_policy_document" "infra_nonprod" {
   # DynamoDB
   statement {
-    actions   = ["dynamodb:*"]
-    resources = ["arn:aws:dynamodb:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:table/maersk-*"]
+    actions = ["dynamodb:*"]
+
+    resources = [
+      "arn:aws:dynamodb:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:table/maersk-*",
+      "arn:aws:dynamodb:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:table/dev_maersk_*",
+      "arn:aws:dynamodb:${data.aws_region.default.name}:${data.aws_caller_identity.default.account_id}:table/test_maersk_*",
+    ]
   }
 
   # S3
