@@ -3,7 +3,7 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   rest_api_id            = "${var.api_id}"
   authorizer_credentials = "${aws_iam_role.invocation_role.arn}"
 
-  authorizer_uri                   = "${aws_lambda_function.lambda.invoke_arn}"
+  authorizer_uri                   = "${aws_lambda_function.authorizer.invoke_arn}"
   type                             = "TOKEN"
   identity_validation_expression   = "Bearer\\s(\\S+)"
   authorizer_result_ttl_in_seconds = 300
@@ -26,16 +26,16 @@ data "aws_iam_policy_document" "assume_lambda" {
 data "aws_iam_policy_document" "role" {
   statement {
     actions   = ["lambda:InvokeFunction"]
-    resources = ["${aws_lambda_function.lambda.arn}"]
+    resources = ["${aws_lambda_function.authorizer.arn}"]
   }
 }
 
 resource "aws_cloudwatch_log_group" "logs" {
-  name              = "/aws/lambda/${aws_lambda_function.lambda.function_name}"
+  name              = "/aws/lambda/${aws_lambda_function.authorizer.function_name}"
   retention_in_days = "${var.cloudwatch_log_group_retention_in_days}"
 }
 
-resource "aws_lambda_function" "lambda" {
+resource "aws_lambda_function" "authorizer" {
   s3_bucket     = "${var.bucket}"
   s3_key        = "${var.key}"
   function_name = "${var.function_name}"
@@ -78,7 +78,7 @@ resource "aws_iam_role_policy" "role_policy" {
 }
 
 resource "aws_iam_role" "invocation_role" {
-  name = "api_gateway_auth_invocation"
+  name = "${var.authorizer_name}-api-gateway-auth-invocation"
   path = "/"
 
   assume_role_policy = <<EOF
@@ -99,7 +99,7 @@ EOF
 }
 
 resource "aws_iam_role_policy" "invocation_policy" {
-  name = "default"
+  name = "${var.authorizer_name}-invocation-policy"
   role = "${aws_iam_role.invocation_role.id}"
 
   policy = <<EOF
