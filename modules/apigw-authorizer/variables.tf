@@ -7,6 +7,7 @@ variable "environment" {
 }
 
 variable "api_id" {}
+variable "api_execution_arn" {}
 variable "bucket" {}
 variable "key" {}
 
