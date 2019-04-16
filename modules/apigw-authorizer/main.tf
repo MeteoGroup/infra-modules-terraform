@@ -11,17 +11,17 @@ resource "aws_api_gateway_authorizer" "authorizer" {
 }
 
 # The action this permission allows is to invoke the function
-resource "aws_lambda_permission" "allow_api_gateway" {
-  action        = "lambda:InvokeFunction"
-  function_name = "${aws_lambda_function.lambda.arn}"
-  statement_id  = "AllowAPIInvoke"
-  principal     = "apigateway.amazonaws.com"
-
-  # /*/*/* sets this permission for all stages, methods, and resource paths in API Gateway to the lambda function
-  #source_arn = "${var.api_execution_arn}/*/*/*"
-  # provides execution arn from stage module
-  source_arn = "${var.api_execution_arn}/*/*"
-}
+#resource "aws_lambda_permission" "allow_api_gateway" {
+#  action        = "lambda:InvokeFunction"
+#  function_name = "${aws_lambda_function.lambda.arn}"
+#  statement_id  = "AllowAPIInvoke"
+#  principal     = "apigateway.amazonaws.com"
+#
+#  # /*/*/* sets this permission for all stages, methods, and resource paths in API Gateway to the lambda function
+#  #source_arn = "${var.api_execution_arn}/*/*/*"
+#  # provides execution arn from stage module
+#  source_arn = "${var.api_execution_arn}/*/*"
+#}
 
 data "aws_iam_policy_document" "assume_lambda" {
   statement {
