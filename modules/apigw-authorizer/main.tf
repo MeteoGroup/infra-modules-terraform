@@ -24,21 +24,6 @@ data "aws_iam_policy_document" "assume_lambda" {
   }
 }
 
-data "aws_iam_policy_document" "assume_apigateway" {
-  statement {
-    actions = ["sts:AssumeRole"]
-
-    principals {
-      type = "Service"
-
-      identifiers = [
-        "lambda.amazonaws.com",
-        "apigateway.amazonaws.com",
-      ]
-    }
-  }
-}
-
 data "aws_iam_policy_document" "invoke" {
   statement {
     actions   = ["lambda:InvokeFunction"]
@@ -55,7 +40,7 @@ resource "aws_lambda_function" "lambda" {
   s3_bucket     = "${var.bucket}"
   s3_key        = "${var.key}"
   function_name = "${var.function_name}"
-  role          = "${aws_iam_role.lambda.arn}"
+  role          = "${aws_iam_role.invoke.arn}"
   handler       = "${var.handler}"
 
   runtime     = "dotnetcore2.1"
@@ -74,23 +59,17 @@ resource "aws_lambda_function" "lambda" {
   }
 }
 
-resource "aws_iam_role" "lambda" {
+resource "aws_iam_role" "invoke" {
   assume_role_policy = "${data.aws_iam_policy_document.assume_lambda.json}"
   description        = "Authorizer resource access"
   name               = "${var.authorizer_name}-${var.environment}-lambda"
+  path               = "${var.lambda_role_path}"
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_attach" {
   count      = "${length(var.lambda_role_policy_arns)}"
   policy_arn = "${element(var.lambda_role_policy_arns, count.index)}"
-  role       = "${aws_iam_role.lambda.name}"
-}
-
-resource "aws_iam_role" "invoke" {
-  assume_role_policy = "${data.aws_iam_policy_document.assume_apigateway.json}"
-  description        = "Invoke role"
-  name               = "${var.authorizer_name}-${var.environment}-invoke"
-  path               = "${var.lambda_role_path}"
+  role       = "${aws_iam_role.invoke.name}"
 }
 
 resource "aws_iam_role_policy" "invoke_policy" {
