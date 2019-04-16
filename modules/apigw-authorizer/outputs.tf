@@ -14,6 +14,6 @@ output "function_name" {
 }
 
 output "invoke_arn" {
-  value       = "${aws_lambda_function.lambda.invoke_arn}"
+  value       = "${aws_lambda_function.authorizer.invoke_arn}"
   description = "Invoke ARN for lambda function"
 }
