@@ -3,7 +3,7 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   rest_api_id            = "${var.api_id}"
   authorizer_credentials = "${aws_iam_role.invoke.arn}"
 
-  authorizer_uri                   = "arn:aws:apigateway:${var.region}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda.arn}/invocations"
+  authorizer_uri                   = "${aws_lambda_function.lambda.invoke_arn}"
   type                             = "TOKEN"
   identity_validation_expression   = "Bearer\\s(\\S+)"
   authorizer_result_ttl_in_seconds = 300
