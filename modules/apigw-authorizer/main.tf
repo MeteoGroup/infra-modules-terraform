@@ -18,7 +18,8 @@ resource "aws_lambda_permission" "allow_api_gateway" {
   principal     = "apigateway.amazonaws.com"
 
   # /*/*/* sets this permission for all stages, methods, and resource paths in API Gateway to the lambda function
-  source_arn = "${var.api_execution_arn}/*/*/*"
+  #source_arn = "${var.api_execution_arn}/*/*/*"
+  source_arn = "${var.api_execution_arn}/*"
 }
 
 data "aws_iam_policy_document" "assume_lambda" {
