@@ -40,7 +40,8 @@ resource "aws_api_gateway_integration" "api_method_integration" {
   cache_key_parameters = ["method.request.path.proxy"]
 
   request_parameters = {
-    "integration.request.path.proxy" = "method.request.path.proxy"
+    "integration.request.path.proxy"           = "method.request.path.proxy"
+    "integration.request.header.X-MG-TenantId" = "context.authorizer.TenantName"
   }
 }
 
@@ -73,6 +74,7 @@ resource "aws_api_gateway_method_response" "method_response" {
     "method.response.header.Access-Control-Allow-Origin"      = true
     "method.response.header.Access-Control-Allow-Credentials" = true
     "method.response.header.Content-Type"                     = true
+    "method.response.header.X-MG-TenantId"                    = true
   }
 }
 
