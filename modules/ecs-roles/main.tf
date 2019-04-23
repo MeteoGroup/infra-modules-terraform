@@ -67,11 +67,23 @@ data "aws_iam_policy_document" "ecs_execution" {
   }
 
   statement {
-    sid = "S3readonly"
-
     actions = [
-      "s3:Get*",
-      "s3:List*",
+      "s3:*",
+    ]
+
+    resources = [
+      "arn:aws:s3:::maersk-*",
+      "arn:aws:s3:::maersk-*/*",
+      "arn:aws:s3:::svc.mg.*",
+      "arn:aws:s3:::svc.mg.*/*",
+      "arn:aws:s3:::fsct-*",
+      "arn:aws:s3:::fsct-*/*",
+    ]
+  }
+
+  statement {
+    actions = [
+      "dynamodb:*",
     ]
 
     resources = ["*"]
