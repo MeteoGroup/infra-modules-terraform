@@ -6,7 +6,7 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   authorizer_uri                   = "${aws_lambda_function.authorizer.invoke_arn}"
   type                             = "TOKEN"
   identity_validation_expression   = "Bearer\\s(\\S+)"
-  authorizer_result_ttl_in_seconds = 300
+  authorizer_result_ttl_in_seconds = "${var.cache_ttl}"
 }
 
 data "aws_iam_policy_document" "assume_lambda" {

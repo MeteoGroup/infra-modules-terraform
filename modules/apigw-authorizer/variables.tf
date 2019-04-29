@@ -56,6 +56,10 @@ variable "tags" {
   default = {}
 }
 
+variable "cache_ttl" {
+  default = 300
+}
+
 variable "timeout" {
   default = 30
 }
