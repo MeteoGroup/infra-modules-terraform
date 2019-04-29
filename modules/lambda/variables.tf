@@ -16,6 +16,12 @@ variable "timeout" {
   default     = "10"
 }
 
+variable "memory_size" {
+  description = "Memory amount which Lamdba will use to execute"
+  type        = "string"
+  default     = "128"
+}
+
 variable "source_bucket" {
   description = "Bucket to use for loading Lambda source ZIP"
   type        = "string"
