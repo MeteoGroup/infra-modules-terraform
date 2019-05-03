@@ -10,7 +10,7 @@ variable "container_image" {
 
 variable "container_memory" {
   description = "The amount of memory (in MiB) to allow the container to use. This is a hard limit, if the container attempts to exceed the container_memory, the container is killed. This field is optional for Fargate launch type and the total amount of container_memory of all containers in a task will need to be lower than the task memory value"
-  default     = 128
+  default     = 1024
 }
 
 variable "container_memory_reservation" {

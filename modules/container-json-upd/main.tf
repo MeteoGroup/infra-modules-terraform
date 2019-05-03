@@ -3,6 +3,7 @@ locals {
   container_definition = {
     name                   = "${var.container_name}"
     image                  = "${var.container_image}"
+    memory                 = "${var.container_memory}"
     essential              = "${var.essential}"
     entryPoint             = "${var.entrypoint}"
     command                = "${var.command}"
