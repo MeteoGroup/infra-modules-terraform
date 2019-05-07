@@ -159,7 +159,7 @@ data "aws_iam_policy_document" "ecs_execution" {
 
 # Creating necessary roles
 resource "aws_iam_role" "ecs_execution_role" {
-  name        = "${var.name_prefix}-ecs-execution-role"
+  name_prefix = "${var.name_prefix}"
   path        = "/"
   description = "Role needed to execute ECS tasks"
 
@@ -167,7 +167,7 @@ resource "aws_iam_role" "ecs_execution_role" {
 }
 
 resource "aws_iam_role" "ec2_ecs_role" {
-  name        = "${var.name_prefix}-ec2-ecs-role"
+  name_prefix = "${var.name_prefix}"
   path        = "/"
   description = "Policy for ec2_ecs_role"
 
@@ -175,7 +175,7 @@ resource "aws_iam_role" "ec2_ecs_role" {
 }
 
 resource "aws_iam_policy" "ecs_execution" {
-  name        = "${var.name_prefix}-ecs-task-policies"
+  name_prefix = "${var.name_prefix}"
   path        = "/"
   description = "Role needed to execute ECS tasks"
 
