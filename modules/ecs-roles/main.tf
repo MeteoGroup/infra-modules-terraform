@@ -196,5 +196,5 @@ resource "aws_iam_role_policy_attachment" "ec2_ecs_role" {
 
 resource "aws_iam_role_policy_attachment" "cloudwatch_agent" {
   role       = "${aws_iam_role.ec2_ecs_role.name}"
-  policy_arn = "arn:aws:iam::aws:policy/service-role/CloudWatchAgentServerPolicy"
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
 }
