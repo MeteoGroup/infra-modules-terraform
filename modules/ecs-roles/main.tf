@@ -34,6 +34,7 @@ data "aws_iam_policy_document" "ecs_execution" {
       "ecs:DeregisterContainerInstance",
       "ecs:DiscoverPollEndpoint",
       "ecs:DescribeServices",
+      "ec2:DescribeTags",
       "ecs:Poll",
       "ecs:RegisterContainerInstance",
       "ecs:StartTelemetrySession",
