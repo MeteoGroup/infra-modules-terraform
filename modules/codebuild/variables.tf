@@ -35,7 +35,7 @@ variable "build_only" {
 variable "cache_enabled" {
   description = "If cache_enabled is true, create an S3 bucket for storing codebuild cache inside"
   type        = "string"
-  default     = "true"
+  default     = "false"
 }
 
 variable "cache_expiration_days" {
