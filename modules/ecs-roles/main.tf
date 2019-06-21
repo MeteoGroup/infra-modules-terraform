@@ -79,6 +79,8 @@ data "aws_iam_policy_document" "ecs_execution" {
       "arn:aws:s3:::svc.mg.*/*",
       "arn:aws:s3:::fsct-*",
       "arn:aws:s3:::fsct-*/*",
+      "arn:aws:s3:::mg-*",
+      "arn:aws:s3:::mg-*/*",
     ]
   }
 
