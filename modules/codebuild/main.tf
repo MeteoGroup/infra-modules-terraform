@@ -191,6 +191,10 @@ data "aws_iam_policy_document" "permissions_cache_bucket" {
     effect = "Allow"
 
     resources = [
+      "arn:aws:s3:::vessel-*/*",
+      "arn:aws:s3:::vessel-*",
+      "arn:aws:s3:::maersk-*/*",
+      "arn:aws:s3:::maersk-*",
       "${aws_s3_bucket.cache_bucket.arn}",
       "${aws_s3_bucket.cache_bucket.arn}/*",
     ]
