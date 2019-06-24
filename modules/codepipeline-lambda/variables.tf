@@ -40,6 +40,12 @@ variable "artifact_s3_bucket" {
   default     = ""
 }
 
+variable "projectname_test" {
+  description = ""
+  type        = "string"
+  default     = ""
+}
+
 variable "tags" {
   description = ""
   type        = ""

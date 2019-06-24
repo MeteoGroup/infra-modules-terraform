@@ -50,7 +50,7 @@ resource "aws_codepipeline" "source_build_deploy" {
       input_artifacts = ["source_output"]
 
       configuration {
-        ProjectName = "${var.repo_name}-test"
+        ProjectName = "${var.projectname_test}"
       }
     }
   }
