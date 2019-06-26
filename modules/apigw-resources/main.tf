@@ -3,7 +3,7 @@ resource "aws_api_gateway_method" "parent_method" {
   rest_api_id   = "${var.api}"
   resource_id   = "${var.root_resource}"
   http_method   = "ANY"
-  authorization = "CUSTOM"
+  authorization = "NONE"
 
   request_parameters = {
     "method.request.header.host" = true
