@@ -6,20 +6,13 @@ data "aws_ssm_parameter" "token" {
   name = "/maersk-repo-primary/oauth-token"
 }
 
-resource "aws_s3_bucket" "codepipeline" {
-  bucket        = "${var.name_prefix}"
-  acl           = "private"
-  force_destroy = true
-  tags          = "${var.tags}"
-}
-
 resource "aws_codepipeline" "source_build_deploy" {
   name = "${var.name_prefix}"
 
   role_arn = "${data.aws_iam_role.role_codepipeline.arn}"
 
   artifact_store {
-    location = "${aws_s3_bucket.codepipeline.bucket}"
+    location = "${var.artifact_s3_bucket}"
     type     = "S3"
   }
 
@@ -57,7 +50,7 @@ resource "aws_codepipeline" "source_build_deploy" {
       input_artifacts = ["source_output"]
 
       configuration {
-        ProjectName = "${var.repo_name}-test"
+        ProjectName = "${var.projectname_test}"
       }
     }
   }

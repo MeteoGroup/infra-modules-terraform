@@ -34,6 +34,18 @@ variable "poll_source_changes" {
   default     = "false"
 }
 
+variable "artifact_s3_bucket" {
+  description = ""
+  type        = "string"
+  default     = ""
+}
+
+variable "projectname_test" {
+  description = ""
+  type        = "string"
+  default     = ""
+}
+
 variable "tags" {
   description = ""
   type        = ""
