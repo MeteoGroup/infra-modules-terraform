@@ -1,13 +1,7 @@
 ################################
-resource "aws_api_gateway_resource" "parent_resource" {
-  rest_api_id = "${var.api}"
-  parent_id   = "${var.root_resource}"
-  path_part   = "/"
-}
-
 resource "aws_api_gateway_method" "parent_method" {
   rest_api_id   = "${var.api}"
-  resource_id   = "${aws_api_gateway_resource.parent_resource.id}"
+  resource_id   = "${var.root_resource}"
   http_method   = "ANY"
   authorization = "CUSTOM"
 
