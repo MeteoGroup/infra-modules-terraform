@@ -11,9 +11,9 @@ resource "aws_api_gateway_method" "parent_method" {
   }
 }
 
-resource "aws_api_gateway_integration" "api_method_integration" {
+resource "aws_api_gateway_integration" "parent_api_method_integration" {
   depends_on  = ["aws_api_gateway_method.parent_method"]
-  rest_api_id = "${var.api_id}"
+  rest_api_id = "${var.api}"
   resource_id = "${var.root_resource}"
   http_method = "${aws_api_gateway_method.parent_method.http_method}"
   type        = "MOCK"
@@ -24,8 +24,8 @@ resource "aws_api_gateway_integration" "api_method_integration" {
 }
 
 resource "aws_api_gateway_method_response" "not_found" {
-  depends_on  = ["aws_api_gateway_method.parent_method", "aws_api_gateway_integration.api_method_integration"]
-  rest_api_id = "${var.api_id}"
+  depends_on  = ["aws_api_gateway_method.parent_method", "aws_api_gateway_integration.parent_api_method_integration"]
+  rest_api_id = "${var.api}"
   resource_id = "${var.root_resource}"
   http_method = "${aws_api_gateway_method.parent_method.http_method}"
   status_code = "404"
