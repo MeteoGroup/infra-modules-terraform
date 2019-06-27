@@ -11,6 +11,36 @@ resource "aws_api_gateway_method" "parent_method" {
   }
 }
 
+resource "aws_api_gateway_integration" "api_method_integration" {
+  depends_on  = ["aws_api_gateway_method.parent_method"]
+  rest_api_id = "${var.api_id}"
+  resource_id = "${var.root_resource}"
+  http_method = "${aws_api_gateway_method.parent_method.http_method}"
+  type        = "MOCK"
+
+  request_templates {
+    "application/json" = "{\"statusCode\": 404}"
+  }
+}
+
+resource "aws_api_gateway_method_response" "not_found" {
+  depends_on  = ["aws_api_gateway_method.parent_method", "aws_api_gateway_integration.api_method_integration"]
+  rest_api_id = "${var.api_id}"
+  resource_id = "${var.root_resource}"
+  http_method = "${aws_api_gateway_method.parent_method.http_method}"
+  status_code = "404"
+
+  response_models {
+    "application/json" = "Empty"
+  }
+
+  response_parameters {
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
+}
+
 ############################
 # resource
 resource "aws_api_gateway_resource" "resource" {
