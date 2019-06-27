@@ -41,6 +41,22 @@ resource "aws_api_gateway_method_response" "not_found" {
   }
 }
 
+resource "aws_api_gateway_integration_response" "not_found_response" {
+  depends_on  = ["aws_api_gateway_method_response.not_found", "aws_api_gateway_method.parent_method", "aws_api_gateway_integration.parent_api_method_integration"]
+  rest_api_id = "${var.api}"
+  resource_id = "${var.root_resource}"
+  http_method = "${aws_api_gateway_method.parent_method.http_method}"
+  status_code = "${aws_api_gateway_method_response.not_found.status_code}"
+
+  response_templates = {
+    "application/json" = ""
+  }
+
+  response_parameters {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+  }
+}
+
 ############################
 # resource
 resource "aws_api_gateway_resource" "resource" {
