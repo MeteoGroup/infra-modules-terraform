@@ -96,13 +96,7 @@ data "aws_iam_policy_document" "ecs_execution" {
     sid = "SQSpermissions"
 
     actions = [
-      "sqs:ChangeMessageVisibility",
-      "sqs:ChangeMessageVisibilityBatch",
-      "sqs:DeleteMessage",
-      "sqs:DeleteMessageBatch",
-      "sqs:ReceiveMessage",
-      "sqs:GetQueueAttributes",
-      "sqs:SendMessage",
+      "sqs:*",
     ]
 
     resources = ["*"]
