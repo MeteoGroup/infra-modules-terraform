@@ -84,6 +84,11 @@ variable "log_driver" {
   default     = "awslogs"
 }
 
+variable "user" {
+  description = "The user to run as inside the container. Can be any of these formats: user, user:group, uid, uid:gid, user:gid, uid:group"
+  default     = ""
+}
+
 variable "log_options" {
   type        = "map"
   description = "The configuration options to send to the `log_driver`"
