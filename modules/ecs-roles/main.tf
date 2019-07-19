@@ -102,6 +102,7 @@ data "aws_iam_policy_document" "ecs_execution" {
       "sqs:DeleteMessageBatch",
       "sqs:ReceiveMessage",
       "sqs:GetQueueAttributes",
+      "sqs:SendMessage",
     ]
 
     resources = ["*"]
