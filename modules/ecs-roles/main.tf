@@ -103,6 +103,16 @@ data "aws_iam_policy_document" "ecs_execution" {
   }
 
   statement {
+    sid = "Batchpermissions"
+
+    actions = [
+      "batch:*",
+    ]
+
+    resources = ["*"]
+  }
+
+  statement {
     sid = "DynamoDBreadonly"
 
     actions = [
