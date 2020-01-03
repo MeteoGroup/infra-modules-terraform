@@ -35,6 +35,23 @@ resource "aws_codepipeline" "source_build_deploy" {
         PollForSourceChanges = "${var.poll_source_changes}"
       }
     }
+
+    action {
+      name             = "Source-of-build-artifacts"
+      category         = "Source"
+      owner            = "ThirdParty"
+      provider         = "GitHub"
+      version          = "1"
+      output_artifacts = ["source_output_props"]
+
+      configuration {
+        OAuthToken           = "${data.aws_ssm_parameter.token.value}"
+        Owner                = "${var.repo_owner}"
+        Repo                 = "maersk-build-artifacts"
+        Branch               = "${var.branch}"
+        PollForSourceChanges = "${var.poll_source_changes}"
+      }
+    }
   }
 
   stage {
@@ -47,10 +64,11 @@ resource "aws_codepipeline" "source_build_deploy" {
       provider = "CodeBuild"
       version  = "1"
 
-      input_artifacts = ["source_output"]
+      input_artifacts = ["source_output", "source_output_props"]
 
       configuration {
-        ProjectName = "${var.projectname_test}"
+        ProjectName   = "${var.projectname_test}"
+        PrimarySource = "source_output"
       }
     }
   }
@@ -64,11 +82,12 @@ resource "aws_codepipeline" "source_build_deploy" {
       owner            = "AWS"
       provider         = "CodeBuild"
       version          = "1"
-      input_artifacts  = ["source_output"]
+      input_artifacts  = ["source_output", "source_output_props"]
       output_artifacts = ["package"]
 
       configuration {
-        ProjectName = "${var.repo_name}-image"
+        ProjectName   = "${var.repo_name}-image"
+        PrimarySource = "source_output"
       }
     }
   }
