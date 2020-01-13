@@ -34,7 +34,7 @@ variable "poll_source_changes" {
   default     = "false"
 }
 
-variable "artifact_s3_bucket" {
+variable "codepipeline_bucket" {
   description = ""
   type        = "string"
   default     = ""

@@ -12,7 +12,7 @@ resource "aws_codepipeline" "source_build_deploy" {
   role_arn = "${data.aws_iam_role.role_codepipeline.arn}"
 
   artifact_store {
-    location = "${var.artifact_s3_bucket}"
+    location = "${var.codepipeline_bucket}"
     type     = "S3"
   }
 
