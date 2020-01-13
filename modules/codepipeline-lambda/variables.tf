@@ -37,7 +37,7 @@ variable "poll_source_changes" {
 variable "codepipeline_bucket" {
   description = ""
   type        = "string"
-  default     = ""
+  default     = "mg-infra-codepipeline-data-dev-euw1"
 }
 
 variable "projectname_test" {
