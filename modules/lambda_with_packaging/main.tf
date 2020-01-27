@@ -36,6 +36,7 @@ resource "aws_lambda_function" "this" {
   runtime          = "${var.runtime}"
   timeout          = "${var.timeout}"
   source_code_hash = "${data.archive_file.lambda_zip.output_base64sha256}"
+  vpc_config       = "${var.vpc_config}"
 
   environment {
     variables = "${var.environment_variables}"
