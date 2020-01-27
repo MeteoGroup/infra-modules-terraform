@@ -61,13 +61,3 @@ variable "source_arns" {
   description = "Source ARNs which are allowed to invoke the Lambda. Must align with entries in source_types variable"
   type        = "list"
 }
-
-variable "vpc_config" {
-  description = "Provide this to allow your function to access your VPC (if both 'subnet_ids' and 'security_group_ids' are empty then vpc_config is considered to be empty or unset, see https://docs.aws.amazon.com/lambda/latest/dg/vpc.html for details)."
-  type        = "list"
-
-  default = [{
-    security_group_ids = []
-    subnet_ids         = []
-  }]
-}
