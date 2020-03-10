@@ -28,4 +28,5 @@ locals {
   }
 
   environment = "${var.environment}"
+  ulimits     = "${var.ulimits}"
 }

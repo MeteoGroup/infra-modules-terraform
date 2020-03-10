@@ -89,6 +89,11 @@ variable "user" {
   default     = ""
 }
 
+variable "ulimits" {
+  description = "The ulimits for the container."
+  default     = ""
+}
+
 variable "log_options" {
   type        = "map"
   description = "The configuration options to send to the `log_driver`"
