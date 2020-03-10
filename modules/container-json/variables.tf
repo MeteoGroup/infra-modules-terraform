@@ -90,7 +90,9 @@ variable "user" {
 }
 
 variable "ulimits" {
-  description = "The ulimits for the container."
+  type        = "list"
+  description = "Container ulimit settings. This is a list of maps, where each map should contain name, hardLimit and softLimit"
+  default     = []
 }
 
 variable "log_options" {
