@@ -15,6 +15,8 @@ locals {
 
     portMappings = "${var.port_mappings}"
 
+    ulimits = "${var.ulimits}"
+
     mountPoints = "${var.mount_points}"
 
     healthCheck = "${var.healthcheck}"
@@ -28,5 +30,4 @@ locals {
   }
 
   environment = "${var.environment}"
-  ulimits     = "${var.ulimits}"
 }

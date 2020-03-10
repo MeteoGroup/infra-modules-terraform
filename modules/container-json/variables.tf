@@ -91,8 +91,8 @@ variable "user" {
 
 variable "ulimits" {
   type        = "list"
-  description = "Container ulimit settings. This is a list of maps, where each map should contain name, hardLimit and softLimit"
-  default     = []
+  description = "Container ulimit settings. This is a list of maps, where each map should contain \"name\", \"hardLimit\" and \"softLimit\""
+  default     = [{}]
 }
 
 variable "log_options" {
