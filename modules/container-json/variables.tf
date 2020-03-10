@@ -91,7 +91,6 @@ variable "user" {
 
 variable "ulimits" {
   description = "The ulimits for the container."
-  default     = ""
 }
 
 variable "log_options" {
