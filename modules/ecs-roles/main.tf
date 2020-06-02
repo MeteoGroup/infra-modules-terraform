@@ -159,6 +159,14 @@ data "aws_iam_policy_document" "ecs_execution" {
       "lambda:ListFunctions",
       "lambda:ListEventSourceMappings",
       "lambda:GetFunctionConfiguration",
+      "secretsmanager:List*",
+      "secretsmanager:Describe*",
+      "secretsmanager:Get*",
+      "kms:Encrypt",
+      "kms:Decrypt",
+      "kms:ReEncrypt*",
+      "kms:GenerateDataKey*",
+      "kms:DescribeKey",
     ]
 
     resources = ["*"]
